@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="pt-BR" data-palette="palette-01" data-font-scale="72">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Tutorial completo de NVDA para aprender a navegar, entender a árvore de acessibilidade e testar interfaces inclusivas.">
+  <title>Tutoriais de acessibilidade | DEV A11Y</title>
+  <link rel="icon" type="image/png" href="../assets/images/DevA11Y-logo.png">
+  <link rel="stylesheet" href="../Style/base.css">
+  <link rel="stylesheet" href="../Style/blog.css">
+  <script src="../js/app.js" defer></script>
+</head>
+<body data-page="tutorials">
+  <a class="skip-link" href="#conteudo-principal">Ir para o conteúdo principal</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="../index.html" aria-label="DEV A11Y — página inicial">DEV A11Y</a>
+
+      <nav class="site-nav" aria-label="Navegação principal">
+        <ul class="nav-list">
+          <li><a href="../index.html">Início</a></li>
+          <li><a href="blog.html" aria-current="page">Tutoriais</a></li>
+          <li><a href="documentacao.html">Documentações</a></li>
+          <li><a href="post.html">Criar conteúdo</a></li>
+        </ul>
+      </nav>
+
+      <details class="a11y-tools" data-a11y-tools>
+        <summary>Acessibilidade</summary>
+        <div class="a11y-panel">
+          <fieldset>
+            <legend>Mudar paleta para o daltonismo</legend>
+            <div class="palette-grid">
+              <button type="button" data-palette-option="palette-01" aria-pressed="true">Branco, azul-escuro e verde-claro</button>
+              <button type="button" data-palette-option="palette-02" aria-pressed="false">Escala de cinza</button>
+              <button type="button" data-palette-option="palette-03" aria-pressed="false">Azul-escuro e amarelo</button>
+              <button type="button" data-palette-option="palette-04" aria-pressed="false">Verde-escuro e ciano</button>
+              <button type="button" data-palette-option="palette-05" aria-pressed="false">Cinza de alto contraste</button>
+              <button type="button" data-palette-option="palette-06" aria-pressed="false">Azul-petróleo e verde-limão</button>
+              <button type="button" data-palette-option="palette-07" aria-pressed="false">Verde-petróleo e verde-claro</button>
+              <button type="button" data-palette-option="palette-08" aria-pressed="false">Verde-escuro e rosa</button>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Mudar o tamanho da fonte</legend>
+            <div class="font-controls">
+              <button type="button" data-font-decrease aria-label="Diminuir tamanho da fonte">A−</button>
+              <output data-font-label>72%</output>
+              <button type="button" data-font-increase aria-label="Aumentar tamanho da fonte">A+</button>
+            </div>
+          </fieldset>
+
+          <div class="a11y-actions">
+            <button type="button" class="button button--secondary" data-a11y-close>Fechar</button>
+          </div>
+        </div>
+      </details>
+    </div>
+  </header>
+
+  <main id="conteudo-principal" tabindex="-1">
+    <div class="container tutorial-layout">
+      <nav class="breadcrumb" aria-label="Trilha de navegação">
+        <ol>
+          <li><a href="../index.html">Início</a></li>
+          <li aria-current="page">Tutoriais</li>
+        </ol>
+      </nav>
+
+      <header class="page-intro tutorial-hero">
+        <div class="tutorial-hero__content">
+          <p class="eyebrow">Leitor de tela</p>
+          <h1>Aprenda a usar o NVDA para testar acessibilidade</h1>
+          <p>Conheça o leitor de tela gratuito para Windows, entenda como ele interpreta uma página e transforme cada teste em decisões melhores de HTML, conteúdo e interação.</p>
+        </div>
+        <figure class="tutorial-cover">
+          <img src="../assets/images/tutorial-nvda-capa.jpg" alt="Pessoa usando um notebook com fones de ouvido enquanto testa uma interface com o NVDA" data-image-fallback>
+          <figcaption>O teste com leitor de tela complementa, mas não substitui, testes com pessoas com deficiência.</figcaption>
+          <p class="image-fallback" data-image-fallback-note hidden>Imagem indisponível: Pessoa usando um notebook com fones de ouvido enquanto testa uma interface com o NVDA. Caminho esperado: <code>../assets/images/tutorial-nvda-capa.jpg</code>.</p>
+          <noscript><p>Descrição da imagem: Pessoa usando um notebook com fones de ouvido enquanto testa uma interface com o NVDA. Caminho esperado: <code>../assets/images/tutorial-nvda-capa.jpg</code>.</p></noscript>
+        </figure>
+      </header>
+
+      <form class="search-form tutorial-search" role="search" data-content-search>
+        <label for="tutorial-search">Pesquisar neste tutorial</label>
+        <div class="search-field">
+          <input id="tutorial-search" name="q" type="search" autocomplete="off" placeholder="Ex.: aria-live, foco ou Name" data-search-input>
+          <button type="submit" class="button button--primary" data-search-submit disabled>Pesquisar</button>
+        </div>
+        <p class="search-status" data-search-status aria-live="polite">Digite um termo para filtrar as seções do tutorial.</p>
+        <noscript><p>A filtragem local exige JavaScript. Todo o conteúdo pesquisável continua disponível nesta página.</p></noscript>
+      </form>
+
+      <div class="tutorial-content">
+        <aside class="tutorial-summary" aria-labelledby="sumario-titulo">
+          <h2 id="sumario-titulo">Neste tutorial</h2>
+          <ol>
+            <li><a href="#para-que-serve">Para que serve</a></li>
+            <li><a href="#casos-de-uso">Casos de uso</a></li>
+            <li><a href="#como-funciona">Como funciona</a></li>
+            <li><a href="#arvore-acessibilidade">Árvore de acessibilidade</a></li>
+            <li><a href="#name-role">Name &amp; Role</a></li>
+            <li><a href="#aria-live">aria-live</a></li>
+            <li><a href="#ordem-foco">Ordem de foco</a></li>
+            <li><a href="#fishing-mania">Fishing Mania</a></li>
+          </ol>
+        </aside>
+
+        <article class="tutorial-article" aria-label="Tutorial de NVDA">
+          <section id="para-que-serve" class="tutorial-section" data-search-item>
+            <p class="section-number" aria-hidden="true">01</p>
+            <h2>Para que serve</h2>
+            <p>O NVDA, sigla de <span lang="en">NonVisual Desktop Access</span>, é um leitor de tela gratuito e de código aberto para Windows. Ele transforma em fala ou braille as informações que os programas expõem às tecnologias assistivas. Assim, pessoas cegas ou com baixa visão conseguem operar o computador sem depender da tela.</p>
+            <p>Em uma página web, o NVDA anuncia títulos, links, botões, campos, listas, tabelas, mensagens e outros elementos. Para quem desenvolve, ele permite conferir se a experiência comunicada pelo código corresponde ao que aparece visualmente.</p>
+            <div class="callout">
+              <h3>Antes de começar</h3>
+              <p>Use fones de ouvido, abra o NVDA e reduza a velocidade da voz se necessário. Para interromper uma fala longa, pressione <kbd>Ctrl</kbd>. A tecla modificadora do NVDA costuma ser <kbd>Insert</kbd> ou <kbd>Caps Lock</kbd>, conforme a configuração.</p>
+            </div>
+          </section>
+
+          <section id="casos-de-uso" class="tutorial-section" data-search-item>
+            <p class="section-number" aria-hidden="true">02</p>
+            <h2>Casos de uso</h2>
+            <p>O leitor de tela participa tanto da rotina de quem navega quanto da validação de produtos digitais. Alguns usos importantes são:</p>
+            <ul class="check-list">
+              <li>ler textos, documentos, e-mails e páginas web;</li>
+              <li>preencher formulários e entender instruções ou mensagens de erro;</li>
+              <li>navegar rapidamente por títulos, links, regiões e controles;</li>
+              <li>usar menus, caixas de diálogo e aplicativos por teclado;</li>
+              <li>revisar a estrutura semântica e o texto acessível de uma interface;</li>
+              <li>identificar conteúdo dinâmico que muda sem ser anunciado.</li>
+            </ul>
+            <p>Durante um teste, tente concluir uma tarefa real — por exemplo, localizar um tutorial e seguir até um exercício — em vez de apenas percorrer cada elemento. Isso revela problemas de contexto, ordem e feedback que uma inspeção isolada pode esconder.</p>
+          </section>
+
+          <section id="como-funciona" class="tutorial-section" data-search-item>
+            <p class="section-number" aria-hidden="true">03</p>
+            <h2>Como funciona</h2>
+            <p>O navegador interpreta HTML, CSS e JavaScript. A partir do HTML semântico e dos atributos de acessibilidade, ele cria uma representação da interface para as APIs do sistema operacional. O NVDA consulta essa representação e anuncia o elemento que recebe foco ou que foi solicitado por um comando de leitura.</p>
+            <div class="flow" aria-label="Fluxo entre o código e a pessoa usuária">
+              <span>HTML semântico</span>
+              <span aria-hidden="true">→</span>
+              <span>Navegador</span>
+              <span aria-hidden="true">→</span>
+              <span>Árvore de acessibilidade</span>
+              <span aria-hidden="true">→</span>
+              <span>NVDA</span>
+              <span aria-hidden="true">→</span>
+              <span>Fala ou braille</span>
+            </div>
+            <p>O leitor de tela não “enxerga” pixels como uma pessoa. Um elemento que parece botão por causa da cor e do formato ainda será apenas texto se o código não informar sua função. Por isso, escolha primeiro o elemento HTML adequado e use ARIA apenas quando a semântica nativa não resolver o caso.</p>
+            <h3>Comandos iniciais no modo de navegação</h3>
+            <div class="table-wrap" tabindex="0" role="region" aria-label="Tabela de comandos iniciais do NVDA">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Tecla</th>
+                    <th scope="col">Ação comum</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td><kbd>H</kbd> / <kbd>Shift</kbd> + <kbd>H</kbd></td><td>Próximo título / título anterior</td></tr>
+                  <tr><td><kbd>K</kbd> / <kbd>Shift</kbd> + <kbd>K</kbd></td><td>Próximo link / link anterior</td></tr>
+                  <tr><td><kbd>B</kbd> / <kbd>Shift</kbd> + <kbd>B</kbd></td><td>Próximo botão / botão anterior</td></tr>
+                  <tr><td><kbd>F</kbd> / <kbd>Shift</kbd> + <kbd>F</kbd></td><td>Próximo campo / campo anterior</td></tr>
+                  <tr><td><kbd>D</kbd> / <kbd>Shift</kbd> + <kbd>D</kbd></td><td>Próxima região / região anterior</td></tr>
+                  <tr><td><kbd>NVDA</kbd> + <kbd>F7</kbd></td><td>Abrir a lista de elementos</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="note">Os atalhos podem variar conforme o aplicativo, o layout do teclado e o modo de interação do NVDA.</p>
+          </section>
+
+          <section id="arvore-acessibilidade" class="tutorial-section" data-search-item>
+            <p class="section-number" aria-hidden="true">04</p>
+            <h2>Árvore de acessibilidade</h2>
+            <p>A árvore de acessibilidade é uma versão estruturada da interface. Ela reúne apenas o que uma tecnologia assistiva precisa conhecer: função, nome, estado, valor e relações entre elementos. O navegador deriva essas informações do DOM e das propriedades aplicadas ao conteúdo.</p>
+            <p>Elementos nativos já carregam semântica. Um <code>&lt;button&gt;</code> possui função de botão, pode receber foco e responde ao teclado. Uma <code>&lt;div&gt;</code> não oferece essas características automaticamente.</p>
+            <pre><code>&lt;!-- Semântica nativa: a opção preferencial --&gt;
+&lt;button type="button"&gt;Salvar rascunho&lt;/button&gt;</code></pre>
+            <p>Conteúdo oculto com <code>display: none</code>, com o atributo <code>hidden</code> ou por outras técnicas que o removem da árvore não deve ser anunciado. Já um texto apenas deslocado visualmente pode continuar disponível ao leitor de tela. Ao inspecionar o navegador, confirme se cada controle aparece com a função, o nome e o estado esperados.</p>
+          </section>
+
+          <section id="name-role" class="tutorial-section" data-search-item>
+            <p class="section-number" aria-hidden="true">05</p>
+            <h2><span lang="en">Name &amp; Role</span>: nome e função</h2>
+            <p>Para entender um controle, a pessoa precisa saber <strong>o que ele é</strong> e <strong>para que serve</strong>. O <span lang="en">role</span> descreve a função — botão, link, caixa de seleção — e o <span lang="en">name</span> fornece o nome acessível anunciado.</p>
+            <p>O texto visível normalmente é a melhor fonte do nome. Em campos, associe uma <code>&lt;label&gt;</code>. Em botões que exibem somente um ícone, forneça um nome curto e específico com <code>aria-label</code>, sem repetir palavras como “botão”, pois o NVDA já anuncia a função.</p>
+            <pre><code>&lt;label for="email"&gt;E-mail para contato&lt;/label&gt;
+&lt;input id="email" name="email" type="email"&gt;
+
+&lt;button type="button" aria-label="Fechar painel"&gt;
+  &lt;span aria-hidden="true"&gt;×&lt;/span&gt;
+&lt;/button&gt;</code></pre>
+            <div class="comparison-grid">
+              <div>
+                <h3>Evite</h3>
+                <pre><code>&lt;div class="botao"&gt;Enviar&lt;/div&gt;</code></pre>
+                <p>O elemento não tem função interativa, foco ou acionamento por teclado.</p>
+              </div>
+              <div>
+                <h3>Prefira</h3>
+                <pre><code>&lt;button type="submit"&gt;Enviar&lt;/button&gt;</code></pre>
+                <p>Nome, função, foco e comportamento de teclado já vêm integrados.</p>
+              </div>
+            </div>
+          </section>
+
+          <section id="aria-live" class="tutorial-section" data-search-item>
+            <p class="section-number" aria-hidden="true">06</p>
+            <h2><code>aria-live</code>: avisos que não movem o foco</h2>
+            <p>Quando uma mensagem muda depois de uma ação, o NVDA pode não perceber a atualização. Uma região viva solicita que o leitor anuncie o novo conteúdo sem deslocar o foco da pessoa.</p>
+            <pre><code>&lt;p aria-live="polite" aria-atomic="true"&gt;
+  3 tutoriais encontrados.
+&lt;/p&gt;</code></pre>
+            <ul>
+              <li><code>polite</code> aguarda uma pausa na fala e serve para estados comuns, como resultados de pesquisa;</li>
+              <li><code>assertive</code> interrompe a fala e deve ficar reservado a situações realmente urgentes;</li>
+              <li><code>aria-atomic="true"</code> pede que a região inteira seja anunciada quando uma parte mudar.</li>
+            </ul>
+            <p>A região deve existir no DOM antes da atualização. Evite inserir a região e a mensagem ao mesmo tempo. Também não anuncie cada tecla digitada ou mudanças decorativas: excesso de fala torna a interface cansativa e pode ocultar informações importantes.</p>
+          </section>
+
+          <section id="ordem-foco" class="tutorial-section" data-search-item>
+            <p class="section-number" aria-hidden="true">07</p>
+            <h2>Ordem de foco</h2>
+            <p>Pressione <kbd>Tab</kbd> para avançar por links e controles e <kbd>Shift</kbd> + <kbd>Tab</kbd> para voltar. A sequência deve acompanhar a leitura e a tarefa: cabeçalho, navegação, conteúdo e ações relacionadas. O foco precisa permanecer visível e nunca ficar preso em um componente.</p>
+            <ol class="test-steps">
+              <li>Comece no topo e use somente o teclado.</li>
+              <li>Confira se cada item focado é anunciado com nome e função compreensíveis.</li>
+              <li>Acione botões com <kbd>Enter</kbd> e <kbd>Espaço</kbd>, e links com <kbd>Enter</kbd>.</li>
+              <li>Abra e feche painéis, menus ou diálogos e confirme para onde o foco vai.</li>
+              <li>Compare a ordem anunciada pelo NVDA com a ordem visual e com o DOM.</li>
+            </ol>
+            <p>Não use valores positivos de <code>tabindex</code> para reorganizar uma página. Corrija a ordem no HTML. Use <code>tabindex="-1"</code> apenas quando um elemento não interativo precisar receber foco por programação, como o conteúdo principal após um link de salto.</p>
+          </section>
+
+          <section id="fishing-mania" class="tutorial-section tutorial-section--challenge" data-search-item>
+            <p class="section-number" aria-hidden="true">08</p>
+            <h2>Fishing Mania: pratique o teste</h2>
+            <p>Agora aplique o que aprendeu em uma interface de jogo. No exercício Fishing Mania, um controle visualmente parecido com botão foi construído de modo que sua ação não está clara para tecnologias assistivas.</p>
+            <p>Use o NVDA e o teclado para investigar:</p>
+            <ul class="check-list">
+              <li>o controle entra na ordem de foco?</li>
+              <li>o leitor anuncia um nome e uma função?</li>
+              <li>é possível acioná-lo com o teclado?</li>
+              <li>qual elemento HTML oferece esse comportamento sem recriá-lo com JavaScript?</li>
+            </ul>
+            <a class="button button--primary tutorial-cta" href="exercicio.html">Ir para o exercício Fishing Mania</a>
+          </section>
+        </article>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>
+        <p class="brand">DEV A11Y</p>
+        <p>Acessibilidade se constrói desde a primeira linha de código.</p>
+      </div>
+      <address>
+        Contato: <a href="mailto:guerrierosantoslucas@gmail.com">guerrierosantoslucas@gmail.com</a>
+      </address>
+      <p>© <span data-current-year>2026</span> DEV A11Y. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <div class="live-region sr-only" data-live-region aria-live="polite" aria-atomic="true"></div>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="pt-BR" data-palette="palette-01" data-font-scale="72">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Exercício prático de acessibilidade para identificar e corrigir um controle sem semântica no jogo Fishing Mania.">
+  <title>Fishing Mania: exercício de semântica | DEV A11Y</title>
+  <link rel="icon" type="image/png" href="../assets/images/DevA11Y-logo.png">
+  <link rel="stylesheet" href="../Style/base.css">
+  <link rel="stylesheet" href="../Style/exercicio.css">
+  <script src="../js/app.js" defer></script>
+</head>
+<body data-page="exercise">
+  <a class="skip-link" href="#conteudo-principal">Ir para o conteúdo principal</a>
+
+  <header class="site-header">
+    <div class="shell header-inner">
+      <a class="brand" href="../index.html" aria-label="DEV A11Y — página inicial">DEV A11Y</a>
+
+      <nav class="site-nav" aria-label="Navegação principal">
+        <ul class="nav-list">
+          <li><a href="../index.html">Início</a></li>
+          <li><a href="blog.html" aria-current="page">Tutoriais</a></li>
+          <li><a href="documentacao.html">Documentações</a></li>
+          <li><a href="post.html">Criar conteúdo</a></li>
+        </ul>
+      </nav>
+
+      <details class="a11y-tools" data-a11y-tools>
+        <summary>Acessibilidade</summary>
+        <div class="a11y-tools__panel">
+          <fieldset>
+            <legend>Mudar paleta para o daltonismo</legend>
+            <div class="palette-options">
+              <button class="palette-button" type="button" data-palette-option="palette-01" aria-pressed="true">Branco, azul-escuro e verde-claro</button>
+              <button class="palette-button" type="button" data-palette-option="palette-02" aria-pressed="false">Cinza neutro</button>
+              <button class="palette-button" type="button" data-palette-option="palette-03" aria-pressed="false">Azul e amarelo</button>
+              <button class="palette-button" type="button" data-palette-option="palette-04" aria-pressed="false">Verde e ciano</button>
+              <button class="palette-button" type="button" data-palette-option="palette-05" aria-pressed="false">Cinza de alto contraste</button>
+              <button class="palette-button" type="button" data-palette-option="palette-06" aria-pressed="false">Azul-petróleo e oliva</button>
+              <button class="palette-button" type="button" data-palette-option="palette-07" aria-pressed="false">Verde-escuro e verde-claro</button>
+              <button class="palette-button" type="button" data-palette-option="palette-08" aria-pressed="false">Verde-escuro e rosa</button>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Mudar o tamanho da fonte</legend>
+            <div class="font-controls">
+              <button type="button" data-font-decrease aria-label="Diminuir tamanho da fonte">−</button>
+              <output data-font-label>72%</output>
+              <button type="button" data-font-increase aria-label="Aumentar tamanho da fonte">+</button>
+            </div>
+          </fieldset>
+
+          <button class="button button--secondary" type="button" data-a11y-close>Fechar painel de acessibilidade</button>
+        </div>
+      </details>
+    </div>
+  </header>
+
+  <main id="conteudo-principal" class="shell exercise-main" tabindex="-1">
+    <nav class="breadcrumb" aria-label="Trilha de navegação">
+      <ol>
+        <li><a href="blog.html">Tutoriais</a></li>
+        <li aria-current="page">Fishing Mania</li>
+      </ol>
+    </nav>
+
+    <header class="exercise-intro">
+      <p class="eyebrow">Exercício prático</p>
+      <h1>Fishing Mania: qual é o problema de acessibilidade?</h1>
+      <p id="exercise-instructions">No jogo Fishing Mania, a ação de lançar a isca foi construída com um elemento visualmente clicável, mas sem a semântica necessária. Analise o trecho e escolha a alternativa que identifica o problema principal.</p>
+    </header>
+
+    <section class="challenge" aria-labelledby="challenge-title">
+      <div class="challenge-copy">
+        <h2 id="challenge-title">Analise o código incorreto</h2>
+        <p>A interface mostra “Lançar isca” como uma ação, porém o código usa uma <code>div</code> no lugar de um controle interativo.</p>
+        <pre class="code-sample" aria-label="Código HTML incorreto"><code>&lt;div class="botao-pesca" onclick="lancarIsca()"&gt;
+  Lançar isca
+&lt;/div&gt;</code></pre>
+        <p class="code-warning"><strong>Importante:</strong> o trecho acima é apenas texto para análise. Nenhuma <code>div</code> desta página funciona como botão.</p>
+      </div>
+
+      <form class="exercise-form" data-exercise-form aria-describedby="exercise-instructions">
+        <fieldset>
+          <legend>Qual é o principal erro de acessibilidade?</legend>
+          <div class="answer-list">
+            <label class="answer-option">
+              <input type="radio" name="answer" value="missing-color">
+              <span>O elemento não define uma cor de fundo.</span>
+            </label>
+            <label class="answer-option">
+              <input type="radio" name="answer" value="semantic-role">
+              <span>A ação não usa um botão semântico, por isso pode não ser identificada nem operada corretamente.</span>
+            </label>
+            <label class="answer-option">
+              <input type="radio" name="answer" value="missing-image">
+              <span>O elemento precisa conter uma imagem de anzol.</span>
+            </label>
+            <label class="answer-option">
+              <input type="radio" name="answer" value="short-label">
+              <span>O texto “Lançar isca” é curto demais.</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <div class="form-actions">
+          <button class="button" type="submit" data-exercise-submit disabled>Conferir resposta</button>
+          <button class="button button--secondary" type="reset" data-exercise-reset>Limpar resposta</button>
+        </div>
+        <noscript><p>Conferir a resposta exige JavaScript. As alternativas e a solução continuam disponíveis nesta página.</p></noscript>
+
+        <p id="feedback-exercicio" class="exercise-feedback" data-exercise-feedback aria-live="polite" aria-atomic="true"></p>
+      </form>
+    </section>
+
+    <section class="solution" aria-labelledby="solution-title">
+      <div class="solution-heading">
+        <p class="eyebrow">Solução semântica</p>
+        <h2 id="solution-title">Use o elemento criado para ações</h2>
+      </div>
+
+      <div class="solution-content">
+        <pre class="code-sample code-sample--correct" aria-label="Código HTML corrigido"><code>&lt;button type="button"&gt;Lançar isca&lt;/button&gt;</code></pre>
+
+        <div class="solution-explanation">
+          <h3>Por que essa solução é acessível?</h3>
+          <ul>
+            <li>O elemento <code>button</code> comunica automaticamente o papel de botão às tecnologias assistivas.</li>
+            <li>Ele entra na ordem de foco sem exigir <code>tabindex</code> adicional.</li>
+            <li>Pode ser acionado pelo teclado com <kbd>Enter</kbd> ou <kbd>Espaço</kbd>, além do ponteiro e do toque.</li>
+            <li>O texto “Lançar isca” fornece um nome acessível claro para a ação.</li>
+            <li><code>type="button"</code> evita o envio acidental caso o controle seja usado dentro de um formulário.</li>
+          </ul>
+          <p>Adicionar apenas <code>role="button"</code> a uma <code>div</code> não oferece sozinho o comportamento de teclado, o foco e os estados nativos. Quando a ação é um botão, prefira sempre o elemento <code>button</code>.</p>
+        </div>
+      </div>
+    </section>
+
+    <aside class="next-step" aria-labelledby="next-step-title">
+      <h2 id="next-step-title">Continue aprendendo</h2>
+      <p>Revise como leitores de tela interpretam nome, função e estado dos elementos da interface.</p>
+      <a class="button" href="blog.html#name-role">Voltar ao tutorial de Name &amp; Role</a>
+    </aside>
+  </main>
+
+  <footer class="site-footer">
+    <div class="shell footer-inner">
+      <p><strong>DEV A11Y</strong> — conteúdo sobre desenvolvimento acessível.</p>
+      <address>Contato: <a href="mailto:guerrierosantoslucas@gmail.com">guerrierosantoslucas@gmail.com</a></address>
+      <p>© <span data-current-year>2026</span> DEV A11Y. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <div class="live-region sr-only" data-live-region aria-live="polite" aria-atomic="true"></div>
+</body>
+</html>

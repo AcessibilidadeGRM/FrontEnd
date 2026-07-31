@@ -1,0 +1,204 @@
+.creation-main {
+  padding-block: var(--space-7) var(--space-8);
+}
+
+.creation-hero {
+  max-width: var(--prose-width);
+  margin-bottom: var(--space-7);
+}
+
+.creation-hero h1 {
+  margin-block: var(--space-2) var(--space-4);
+}
+
+.creation-hero > :last-child {
+  margin-bottom: 0;
+  font-size: 1.125rem;
+  line-height: 1.7;
+}
+
+.creation-eyebrow {
+  margin: 0;
+  color: var(--color-text);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+html[data-palette="palette-01"] .creation-eyebrow {
+  width: fit-content;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-sm);
+  background: var(--color-highlight);
+  color: var(--color-secondary);
+}
+
+.creation-layout {
+  display: grid;
+  gap: var(--space-6);
+  align-items: start;
+}
+
+.creation-form-card,
+.creation-guide {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.creation-form-card {
+  padding: clamp(var(--space-4), 4vw, var(--space-7));
+  border-top: 0.375rem solid var(--color-accent);
+  background: var(--color-surface);
+}
+
+.creation-form-card > h2,
+.creation-guide > h2 {
+  margin-top: 0;
+}
+
+.creation-guide > h2 {
+  color: inherit;
+}
+
+.creation-form {
+  display: grid;
+  gap: var(--space-6);
+  margin-top: var(--space-6);
+}
+
+.creation-form .form-field {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.creation-form label {
+  font-weight: 800;
+}
+
+.creation-form .field-hint {
+  margin: 0;
+  max-width: 70ch;
+  font-size: 0.925rem;
+  line-height: 1.5;
+}
+
+.creation-form input,
+.creation-form select,
+.creation-form textarea {
+  width: 100%;
+  min-height: var(--target-size);
+  padding: var(--space-3) var(--space-4);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+}
+
+.creation-form textarea {
+  min-height: 18rem;
+  line-height: 1.6;
+  resize: vertical;
+}
+
+.creation-form input:focus-visible,
+.creation-form select:focus-visible,
+.creation-form textarea:focus-visible {
+  border-color: var(--color-focus);
+  outline: 3px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+
+.creation-counters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-4);
+  font-size: 0.925rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.creation-counters output {
+  font-weight: 700;
+}
+
+.creation-submit-note {
+  margin: 0;
+  padding: var(--space-4);
+  border-inline-start: 0.25rem solid var(--color-accent);
+  background: color-mix(in srgb, var(--color-surface) 88%, var(--color-accent));
+  line-height: 1.6;
+}
+
+.creation-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.creation-actions .button {
+  width: 100%;
+}
+
+.creation-status {
+  min-height: 1.5em;
+  margin: 0;
+  font-weight: 700;
+}
+
+.creation-guide {
+  padding: var(--space-5);
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+}
+
+.creation-guide ol {
+  display: grid;
+  gap: var(--space-3);
+  margin-block: var(--space-5);
+  padding-inline-start: 1.5rem;
+}
+
+.creation-guide li {
+  padding-inline-start: var(--space-2);
+  line-height: 1.55;
+}
+
+.creation-guide li::marker {
+  font-weight: 800;
+}
+
+.creation-guide > :last-child {
+  margin-bottom: 0;
+}
+
+@media (min-width: 40rem) {
+  .creation-actions .button {
+    width: auto;
+  }
+}
+
+@media (min-width: 64rem) {
+  .creation-layout {
+    grid-template-columns: minmax(0, 2fr) minmax(17rem, 1fr);
+    gap: var(--space-7);
+  }
+
+  .creation-guide {
+    position: sticky;
+    top: calc(var(--space-6) + 5rem);
+  }
+}
+
+@media (forced-colors: active) {
+  .creation-form-card,
+  .creation-guide,
+  .creation-form input,
+  .creation-form select,
+  .creation-form textarea,
+  .creation-submit-note {
+    border-color: CanvasText;
+  }
+}

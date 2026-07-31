@@ -1,11 +1,189 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR" data-palette="palette-01" data-font-scale="72">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DevA11Y</title>
+    <meta name="description" content="Aprenda desenvolvimento acessível com tutoriais gratuitos, documentação e exercícios práticos do DEV A11Y.">
+    <title>Início | DEV A11Y</title>
+    <link rel="icon" type="image/png" href="./assets/images/DevA11Y-logo.png">
+    <link rel="stylesheet" href="./Style/base.css">
+    <link rel="stylesheet" href="./Style/index.css">
+    <script src="./js/app.js" defer></script>
 </head>
-<body>
-    <h1>DevA11Y</h1>
+<body data-page="home">
+    <a class="skip-link" href="#conteudo-principal">Ir para o conteúdo principal</a>
+
+    <header class="site-header">
+        <div class="shell site-header__inner">
+            <a class="brand" href="./index.html" aria-label="DEV A11Y — página inicial">DEV A11Y</a>
+
+            <nav class="primary-nav" aria-label="Navegação principal">
+                <ul class="nav-list">
+                    <li><a href="./index.html" aria-current="page">Início</a></li>
+                    <li><a href="./html/blog.html">Tutoriais</a></li>
+                    <li><a href="./html/documentacao.html">Documentações</a></li>
+                    <li><a href="./html/post.html">Criar conteúdo</a></li>
+                </ul>
+            </nav>
+
+            <details class="a11y-tools" data-a11y-tools>
+                <summary>Acessibilidade</summary>
+                <div class="a11y-panel">
+                    <div class="a11y-fields">
+                        <fieldset>
+                            <legend>Mudar paleta para o daltonismo</legend>
+                            <div class="a11y-palette-options">
+                                <button class="a11y-swatch" type="button" data-palette-option="palette-01" aria-label="Paleta 1, branco, azul-escuro e verde-claro" aria-pressed="true"><span aria-hidden="true">1</span></button>
+                                <button class="a11y-swatch" type="button" data-palette-option="palette-02" aria-label="Paleta 2, preto com cinza" aria-pressed="false"><span aria-hidden="true">2</span></button>
+                                <button class="a11y-swatch" type="button" data-palette-option="palette-03" aria-label="Paleta 3, azul-violeta com amarelo" aria-pressed="false"><span aria-hidden="true">3</span></button>
+                                <button class="a11y-swatch" type="button" data-palette-option="palette-04" aria-label="Paleta 4, verde-escuro com ciano" aria-pressed="false"><span aria-hidden="true">4</span></button>
+                                <button class="a11y-swatch" type="button" data-palette-option="palette-05" aria-label="Paleta 5, cinza-escuro com cinza-claro" aria-pressed="false"><span aria-hidden="true">5</span></button>
+                                <button class="a11y-swatch" type="button" data-palette-option="palette-06" aria-label="Paleta 6, azul-petróleo com verde-limão" aria-pressed="false"><span aria-hidden="true">6</span></button>
+                                <button class="a11y-swatch" type="button" data-palette-option="palette-07" aria-label="Paleta 7, verde-petróleo com verde-claro" aria-pressed="false"><span aria-hidden="true">7</span></button>
+                                <button class="a11y-swatch" type="button" data-palette-option="palette-08" aria-label="Paleta 8, verde-petróleo com rosa" aria-pressed="false"><span aria-hidden="true">8</span></button>
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
+                            <legend>Mudar o tamanho da fonte</legend>
+                            <div class="a11y-font-controls">
+                                <button type="button" data-font-decrease aria-label="Diminuir o tamanho da fonte">−</button>
+                                <output data-font-label>72%</output>
+                                <button type="button" data-font-increase aria-label="Aumentar o tamanho da fonte">+</button>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <button class="button button--secondary" type="button" data-a11y-close>Fechar</button>
+                </div>
+            </details>
+        </div>
+    </header>
+
+    <main id="conteudo-principal" tabindex="-1">
+        <section class="home-hero" aria-labelledby="titulo-home">
+            <div class="shell home-hero__content">
+                <p class="home-hero__eyebrow">Desenvolvimento inclusivo começa aqui</p>
+                <h1 id="titulo-home">Aprenda a desenvolver com acessibilidade</h1>
+                <p class="home-hero__subtitle">Acesse gratuitamente tutoriais e documentações sobre acessibilidade digital para criar experiências que funcionem para mais pessoas.</p>
+                <div class="home-hero__actions">
+                    <a class="button button--primary" href="./html/blog.html">Explorar tutoriais</a>
+                    <a class="button button--secondary" href="./html/documentacao.html">Consultar documentações</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="home-paths" aria-labelledby="titulo-caminhos">
+            <div class="shell">
+                <div class="home-section-heading">
+                    <p class="home-section-heading__eyebrow">Conteúdo para colocar em prática</p>
+                    <h2 id="titulo-caminhos">Escolha por onde começar</h2>
+                    <p>Aprenda conceitos, consulte referências e transforme conhecimento em interfaces mais inclusivas.</p>
+                </div>
+                <div class="home-card-grid">
+                    <article class="home-card">
+                        <div class="home-card__number" aria-hidden="true">01</div>
+                        <h3>Tutoriais</h3>
+                        <p>Entenda tecnologias assistivas, semântica HTML, foco e anúncios dinâmicos com exemplos aplicáveis.</p>
+                        <a href="./html/blog.html">Ver todos os tutoriais <span aria-hidden="true">→</span></a>
+                    </article>
+                    <article class="home-card">
+                        <div class="home-card__number" aria-hidden="true">02</div>
+                        <h3>Documentações</h3>
+                        <p>Consulte materiais de apoio detalhados para usar ferramentas de acessibilidade no desenvolvimento.</p>
+                        <a href="./html/documentacao.html">Acessar documentações <span aria-hidden="true">→</span></a>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="home-features" aria-labelledby="titulo-acessibilidade">
+            <div class="shell">
+                <div class="home-section-heading">
+                    <p class="home-section-heading__eyebrow">Acessibilidade é plural</p>
+                    <h2 id="titulo-acessibilidade">Projete para diferentes formas de perceber e interagir</h2>
+                </div>
+
+                <article class="home-feature">
+                    <div class="home-feature__content">
+                        <p class="home-feature__index" aria-hidden="true">01</p>
+                        <h3>Daltonismo</h3>
+                        <p>O daltonismo altera a percepção de determinadas cores. Por isso, informações importantes não devem depender apenas da cor: combine contraste adequado com textos, ícones, padrões e estados visíveis.</p>
+                        <p>Paletas testadas e mensagens claras ajudam pessoas com diferentes tipos de visão de cores a compreender conteúdos e concluir tarefas com autonomia.</p>
+                        <a href="./html/blog.html">Aprender sobre interfaces perceptíveis <span aria-hidden="true">→</span></a>
+                    </div>
+                    <figure class="home-feature__media">
+                        <img src="assets/images/daltonismo-grafico.png" alt="Comparação de um gráfico percebido com diferentes tipos de daltonismo" data-image-fallback>
+                        <figcaption class="image-fallback" data-image-fallback-note hidden>Imagem indisponível: Comparação de um gráfico percebido com diferentes tipos de daltonismo. Caminho esperado: <code>assets/images/daltonismo-grafico.png</code>.</figcaption>
+                        <noscript><p>Descrição da imagem: Comparação de um gráfico percebido com diferentes tipos de daltonismo. Caminho esperado: <code>assets/images/daltonismo-grafico.png</code>.</p></noscript>
+                    </figure>
+                </article>
+
+                <article class="home-feature home-feature--reverse">
+                    <div class="home-feature__content">
+                        <p class="home-feature__index" aria-hidden="true">02</p>
+                        <h3>Cegueira</h3>
+                        <p>Pessoas cegas podem navegar com leitores de tela, teclado e linhas braille. Uma estrutura semântica consistente permite que títulos, regiões, links e controles sejam identificados com precisão.</p>
+                        <p>Alternativas textuais significativas, ordem de foco lógica e rótulos objetivos tornam a experiência compreensível sem depender da apresentação visual.</p>
+                        <a href="./html/documentacao.html">Conhecer leitores de tela <span aria-hidden="true">→</span></a>
+                    </div>
+                    <figure class="home-feature__media">
+                        <img src="assets/images/cegueira-olho.png" alt="Ilustração de um olho representando acesso ao conteúdo por pessoas cegas" data-image-fallback>
+                        <figcaption class="image-fallback" data-image-fallback-note hidden>Imagem indisponível: Ilustração de um olho representando acesso ao conteúdo por pessoas cegas. Caminho esperado: <code>assets/images/cegueira-olho.png</code>.</figcaption>
+                        <noscript><p>Descrição da imagem: Ilustração de um olho representando acesso ao conteúdo por pessoas cegas. Caminho esperado: <code>assets/images/cegueira-olho.png</code>.</p></noscript>
+                    </figure>
+                </article>
+
+                <article class="home-feature">
+                    <div class="home-feature__content">
+                        <p class="home-feature__index" aria-hidden="true">03</p>
+                        <h3>Portabilidade</h3>
+                        <p>Conteúdos acessíveis precisam funcionar em diferentes dispositivos, tamanhos de tela, níveis de ampliação e modos de entrada. Layouts flexíveis preservam leitura e operação em cada contexto.</p>
+                        <p>Boas áreas de toque, texto redimensionável e navegação independente de mouse criam experiências mais robustas para todas as pessoas.</p>
+                        <a href="./html/exercicio.html">Praticar acessibilidade em controles <span aria-hidden="true">→</span></a>
+                    </div>
+                    <figure class="home-feature__media">
+                        <img src="assets/images/portabilidade-dispositivos.png" alt="Computador, tablet e celular exibindo o mesmo conteúdo de forma adaptável" data-image-fallback>
+                        <figcaption class="image-fallback" data-image-fallback-note hidden>Imagem indisponível: Computador, tablet e celular exibindo o mesmo conteúdo de forma adaptável. Caminho esperado: <code>assets/images/portabilidade-dispositivos.png</code>.</figcaption>
+                        <noscript><p>Descrição da imagem: Computador, tablet e celular exibindo o mesmo conteúdo de forma adaptável. Caminho esperado: <code>assets/images/portabilidade-dispositivos.png</code>.</p></noscript>
+                    </figure>
+                </article>
+            </div>
+        </section>
+
+        <section class="home-cta" aria-labelledby="titulo-cta">
+            <div class="shell home-cta__inner">
+                <div>
+                    <p class="home-cta__eyebrow">Compartilhe conhecimento</p>
+                    <h2 id="titulo-cta">Ajude a construir uma web mais acessível</h2>
+                    <p>Organize uma ideia, revise seu conteúdo e prepare uma nova contribuição para o DEV A11Y.</p>
+                </div>
+                <a class="button button--primary" href="./html/post.html">Criar conteúdo</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="shell footer-grid">
+            <div>
+                <a class="brand" href="./index.html">DEV A11Y</a>
+                <p>Conteúdo aberto para aprender e praticar acessibilidade digital.</p>
+            </div>
+            <nav class="footer-nav" aria-label="Navegação do rodapé">
+                <a href="./index.html" aria-current="page">Início</a>
+                <a href="./html/blog.html">Tutoriais</a>
+                <a href="./html/documentacao.html">Documentações</a>
+                <a href="./html/post.html">Criar conteúdo</a>
+            </nav>
+            <address>
+                <span>Contato</span>
+                <a href="mailto:guerrierosantoslucas@gmail.com">guerrierosantoslucas@gmail.com</a>
+            </address>
+        </div>
+        <div class="shell site-footer__legal">
+            <p>© <span data-current-year>2026</span> DEV A11Y. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <div class="live-region sr-only" data-live-region aria-live="polite" aria-atomic="true"></div>
 </body>
 </html>

@@ -1,0 +1,427 @@
+/* Composição exclusiva da página de tutoriais. O shell e os controles compartilhados vivem em base.css. */
+
+.tutorial-layout {
+  padding-block: var(--space-4) var(--space-8);
+}
+
+html[data-palette="palette-01"] body[data-page="tutorials"] main {
+  background:
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--color-primary) 18%, var(--color-surface)) 0%,
+      var(--color-surface) 24%,
+      color-mix(in srgb, var(--color-primary) 8%, var(--color-surface)) 52%,
+      var(--color-surface) 78%,
+      color-mix(in srgb, var(--color-primary) 14%, var(--color-surface)) 100%
+    );
+}
+
+.tutorial-hero {
+  display: grid;
+  gap: var(--space-5);
+  align-items: center;
+  margin-block: var(--space-5) var(--space-7);
+  max-width: none;
+}
+
+.tutorial-hero__content {
+  max-width: var(--prose-width);
+}
+
+.tutorial-hero__content h1 {
+  max-width: 16ch;
+  margin-block: var(--space-2) var(--space-4);
+  font-size: clamp(2rem, 8vw, 4.5rem);
+  line-height: 1.05;
+  overflow-wrap: normal;
+  text-wrap: balance;
+}
+
+.tutorial-hero__content > p:last-child {
+  max-width: 62ch;
+  font-size: 1.125rem;
+}
+
+.tutorial-hero .eyebrow {
+  display: inline-block;
+  margin: 0;
+  padding: var(--space-1) var(--space-3);
+  border: 2px solid var(--color-accent);
+  border-radius: var(--radius-pill);
+  color: var(--color-text);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+html[data-palette="palette-01"] .tutorial-hero .eyebrow {
+  background: var(--color-highlight);
+  color: var(--color-secondary);
+}
+
+.tutorial-cover {
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-lg);
+}
+
+.tutorial-cover img {
+  display: block;
+  width: 100%;
+  min-height: 15rem;
+  max-height: 28rem;
+  object-fit: cover;
+}
+
+.tutorial-cover figcaption {
+  padding: var(--space-3) var(--space-4);
+  border-top: 1px solid var(--color-border);
+  color: var(--color-text);
+  font-size: 0.9rem;
+}
+
+.tutorial-search {
+  margin-block: var(--space-6);
+}
+
+.tutorial-search label {
+  display: block;
+  margin-bottom: var(--space-2);
+  font-weight: 800;
+}
+
+.tutorial-search .search-field {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.tutorial-search input {
+  width: 100%;
+}
+
+.tutorial-search .search-status {
+  min-height: 1.5em;
+  margin-block: var(--space-2) 0;
+}
+
+.tutorial-content {
+  display: grid;
+  gap: var(--space-6);
+  align-items: start;
+}
+
+.tutorial-summary {
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-text);
+  box-shadow: var(--shadow-sm);
+}
+
+.tutorial-summary h2 {
+  margin-top: 0;
+  font-size: 1.125rem;
+}
+
+.tutorial-summary ol {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding-left: var(--space-5);
+}
+
+.tutorial-summary a {
+  display: flex;
+  min-block-size: var(--target-size);
+  color: var(--color-text);
+  font-weight: 700;
+}
+
+.tutorial-article {
+  display: grid;
+  gap: var(--space-6);
+  min-width: 0;
+}
+
+.tutorial-section {
+  position: relative;
+  min-width: 0;
+  padding: var(--space-5);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  color: var(--color-text);
+  box-shadow: var(--shadow-sm);
+}
+
+.tutorial-section h2 {
+  margin-top: 0;
+  padding-right: 3.5rem;
+  color: inherit;
+  text-wrap: balance;
+}
+
+.tutorial-section h3 {
+  color: inherit;
+}
+
+.tutorial-section p,
+.tutorial-section li {
+  max-width: 72ch;
+}
+
+.tutorial-section a:not(.button) {
+  color: var(--color-text);
+}
+
+.section-number {
+  position: absolute;
+  top: var(--space-4);
+  right: var(--space-4);
+  margin: 0;
+  color: var(--color-text);
+  font-size: 1.5rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.callout {
+  margin-top: var(--space-5);
+  padding: var(--space-4);
+  border-inline-start: 0.35rem solid var(--color-accent);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  background: color-mix(in srgb, var(--color-accent) 12%, var(--color-surface));
+}
+
+.callout h3,
+.callout p:last-child {
+  margin-bottom: 0;
+}
+
+.callout h3 {
+  margin-top: 0;
+}
+
+.check-list {
+  padding-left: 0;
+  list-style: none;
+}
+
+.check-list li {
+  position: relative;
+  margin-block: var(--space-2);
+  padding-left: 1.75rem;
+}
+
+.check-list li::before {
+  position: absolute;
+  left: 0;
+  color: var(--color-accent);
+  font-weight: 900;
+  content: "✓";
+}
+
+.flow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  align-items: center;
+  margin-block: var(--space-5);
+}
+
+.flow span:not([aria-hidden="true"]) {
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--color-accent) 12%, var(--color-surface));
+  font-weight: 700;
+}
+
+.flow span[aria-hidden="true"] {
+  color: var(--color-accent);
+  font-size: 1.25rem;
+  font-weight: 900;
+}
+
+.table-wrap {
+  max-width: 100%;
+  margin-block: var(--space-4);
+  overflow-x: auto;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.table-wrap:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+.tutorial-section table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 34rem;
+}
+
+.tutorial-section th,
+.tutorial-section td {
+  padding: var(--space-3);
+  border-bottom: 1px solid var(--color-border);
+  text-align: left;
+  vertical-align: top;
+}
+
+.tutorial-section th {
+  background: color-mix(in srgb, var(--color-accent) 18%, var(--color-surface));
+  color: var(--color-text);
+}
+
+.tutorial-section tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.tutorial-section pre {
+  max-width: 100%;
+  margin-block: var(--space-4);
+  overflow-x: auto;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--color-surface) 84%, #000000);
+  color: var(--color-text);
+  tab-size: 2;
+}
+
+.tutorial-section pre code {
+  display: block;
+  width: max-content;
+  min-width: 100%;
+  padding: var(--space-4);
+  color: inherit;
+  font-family: ui-monospace, "Cascadia Code", "Segoe UI Mono", Consolas, monospace;
+  line-height: 1.65;
+}
+
+.tutorial-section :not(pre) > code,
+.tutorial-section kbd {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--color-accent) 12%, var(--color-surface));
+  color: inherit;
+  font-family: ui-monospace, "Cascadia Code", "Segoe UI Mono", Consolas, monospace;
+  font-size: 0.9em;
+}
+
+.tutorial-section :not(pre) > code {
+  padding: 0.1em 0.3em;
+}
+
+.tutorial-section kbd {
+  display: inline-block;
+  min-width: 1.7em;
+  padding: 0.12em 0.38em;
+  box-shadow: inset 0 -2px 0 var(--color-border);
+  font-weight: 700;
+  text-align: center;
+}
+
+.note {
+  font-size: 0.92rem;
+  font-style: italic;
+}
+
+.comparison-grid {
+  display: grid;
+  gap: var(--space-4);
+  margin-top: var(--space-5);
+}
+
+.comparison-grid > div {
+  min-width: 0;
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.comparison-grid h3 {
+  margin-top: 0;
+}
+
+.comparison-grid pre {
+  margin-block: var(--space-3);
+}
+
+.test-steps {
+  display: grid;
+  gap: var(--space-3);
+  padding-left: var(--space-6);
+}
+
+.test-steps li::marker {
+  color: var(--color-accent);
+  font-weight: 900;
+}
+
+.tutorial-section--challenge {
+  border-width: 2px;
+  border-color: var(--color-accent);
+  background: color-mix(in srgb, var(--color-accent) 8%, var(--color-surface));
+}
+
+.tutorial-cta {
+  margin-top: var(--space-3);
+}
+
+@media (min-width: 36rem) {
+  .tutorial-search .search-field {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .comparison-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 52rem) {
+  .tutorial-hero {
+    grid-template-columns: minmax(0, 1.25fr) minmax(16rem, 0.75fr);
+  }
+
+  .tutorial-content {
+    grid-template-columns: minmax(12rem, 16rem) minmax(0, 1fr);
+  }
+
+  .tutorial-summary {
+    position: sticky;
+    top: 6.5rem;
+  }
+
+  .tutorial-section {
+    padding: var(--space-6);
+  }
+}
+
+@media (forced-colors: active) {
+  html[data-palette="palette-01"] body[data-page="tutorials"] main {
+    background: Canvas;
+  }
+
+  .tutorial-cover,
+  .tutorial-summary,
+  .tutorial-section,
+  .callout,
+  .comparison-grid > div,
+  .flow span:not([aria-hidden="true"]),
+  .table-wrap,
+  .tutorial-section pre {
+    border-color: CanvasText;
+  }
+
+  .check-list li::before,
+  .section-number,
+  .flow span[aria-hidden="true"] {
+    color: CanvasText;
+  }
+}

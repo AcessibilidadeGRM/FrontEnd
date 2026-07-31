@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-palette="palette-01" data-font-scale="72">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Documentação educacional em português sobre o leitor de telas NVDA: recursos, requisitos, comandos, configuração e uso na avaliação de acessibilidade.">
+  <title>Documentações — Guia educacional do NVDA | DEV A11Y</title>
+  <link rel="icon" type="image/png" href="../assets/images/DevA11Y-logo.png">
+  <link rel="stylesheet" href="../Style/base.css">
+  <link rel="stylesheet" href="../Style/documentacao.css">
+  <script src="../js/app.js" defer></script>
+</head>
+<body data-page="documentation">
+  <a class="skip-link" href="#conteudo-principal">Ir para o conteúdo principal</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="../index.html" aria-label="DEV A11Y — página inicial">DEV A11Y</a>
+
+      <nav class="primary-nav" aria-label="Navegação principal">
+        <ul class="nav-list">
+          <li><a href="../index.html">Início</a></li>
+          <li><a href="blog.html">Tutoriais</a></li>
+          <li><a href="documentacao.html" aria-current="page">Documentações</a></li>
+          <li><a href="post.html">Criar conteúdo</a></li>
+        </ul>
+      </nav>
+
+      <details class="a11y-tools" data-a11y-tools>
+        <summary>Acessibilidade</summary>
+        <div class="a11y-tools__panel">
+          <fieldset>
+            <legend>Mudar paleta para o daltonismo</legend>
+            <div class="palette-options">
+              <button class="palette-option" type="button" data-palette-option="palette-01" aria-pressed="true" aria-label="Usar paleta 1, branco, azul escuro e verde claro">
+                <span aria-hidden="true">Paleta 1</span>
+              </button>
+              <button class="palette-option" type="button" data-palette-option="palette-02" aria-pressed="false" aria-label="Usar paleta 2, escala de cinza">
+                <span aria-hidden="true">Paleta 2</span>
+              </button>
+              <button class="palette-option" type="button" data-palette-option="palette-03" aria-pressed="false" aria-label="Usar paleta 3, azul profundo e amarelo">
+                <span aria-hidden="true">Paleta 3</span>
+              </button>
+              <button class="palette-option" type="button" data-palette-option="palette-04" aria-pressed="false" aria-label="Usar paleta 4, verde escuro e ciano">
+                <span aria-hidden="true">Paleta 4</span>
+              </button>
+              <button class="palette-option" type="button" data-palette-option="palette-05" aria-pressed="false" aria-label="Usar paleta 5, cinza neutro de alto contraste">
+                <span aria-hidden="true">Paleta 5</span>
+              </button>
+              <button class="palette-option" type="button" data-palette-option="palette-06" aria-pressed="false" aria-label="Usar paleta 6, azul-petróleo e verde oliva">
+                <span aria-hidden="true">Paleta 6</span>
+              </button>
+              <button class="palette-option" type="button" data-palette-option="palette-07" aria-pressed="false" aria-label="Usar paleta 7, verde escuro e verde claro">
+                <span aria-hidden="true">Paleta 7</span>
+              </button>
+              <button class="palette-option" type="button" data-palette-option="palette-08" aria-pressed="false" aria-label="Usar paleta 8, verde-petróleo e rosa">
+                <span aria-hidden="true">Paleta 8</span>
+              </button>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Mudar o tamanho da fonte</legend>
+            <div class="font-controls">
+              <button type="button" data-font-decrease aria-label="Diminuir o tamanho da fonte">A−</button>
+              <output data-font-label>72%</output>
+              <button type="button" data-font-increase aria-label="Aumentar o tamanho da fonte">A+</button>
+            </div>
+          </fieldset>
+
+          <button class="button button--secondary" type="button" data-a11y-close>Fechar painel</button>
+        </div>
+      </details>
+    </div>
+  </header>
+
+  <main id="conteudo-principal" tabindex="-1">
+    <section class="documentation-hero" aria-labelledby="titulo-documentacao">
+      <div class="documentation-hero__content">
+        <p class="documentation-eyebrow">Documentação educacional</p>
+        <h1 id="titulo-documentacao">NVDA: guia de referência para começar e testar interfaces</h1>
+        <p class="documentation-lead">Conheça os recursos, requisitos, comandos essenciais e um fluxo prático de avaliação com o leitor de telas gratuito para Windows.</p>
+        <div class="documentation-actions">
+          <a class="button button--primary" href="#introducao">Começar a leitura</a>
+          <button class="button button--secondary" type="button" data-print-document aria-describedby="print-help">Baixe como PDF</button>
+        </div>
+        <p class="print-help" id="print-help">Abre a janela de impressão do navegador. Nela, escolha “Salvar como PDF”; nenhum arquivo é buscado ou enviado para um servidor.</p>
+        <noscript><p>Para salvar sem JavaScript, use a opção “Imprimir” do seu navegador e selecione “Salvar como PDF”.</p></noscript>
+      </div>
+    </section>
+
+    <div class="documentation-shell">
+      <form class="search-form documentation-search" role="search" data-content-search>
+        <div class="search-field">
+          <label for="documentation-search-input">Pesquisar nesta documentação</label>
+          <div class="search-field__controls">
+            <input id="documentation-search-input" type="search" name="consulta" autocomplete="off" data-search-input aria-describedby="documentation-search-hint documentation-search-status">
+            <button class="button button--primary" type="submit" data-search-submit disabled>Pesquisar</button>
+          </div>
+          <p id="documentation-search-hint">Digite um termo como “comandos”, “formulários”, “requisitos” ou “braille”.</p>
+        </div>
+        <p class="search-status" id="documentation-search-status" data-search-status aria-live="polite" aria-atomic="true"></p>
+        <noscript><p>A filtragem local exige JavaScript. Todo o conteúdo pesquisável continua disponível nesta página.</p></noscript>
+      </form>
+
+      <div class="documentation-layout">
+        <aside class="documentation-toc" aria-labelledby="sumario-titulo">
+          <h2 id="sumario-titulo">Nesta página</h2>
+          <nav aria-label="Sumário da documentação">
+            <ol>
+              <li><a href="#introducao">Introdução ao NVDA</a></li>
+              <li><a href="#recursos">Principais recursos</a></li>
+              <li><a href="#usos">Usos suportados</a></li>
+              <li><a href="#requisitos">Requisitos do sistema</a></li>
+              <li><a href="#primeiros-passos">Primeiros passos</a></li>
+              <li><a href="#modos-navegacao">Modos de navegação</a></li>
+              <li><a href="#comandos">Comandos essenciais</a></li>
+              <li><a href="#web">Navegação na web</a></li>
+              <li><a href="#formularios">Formulários</a></li>
+              <li><a href="#configuracao">Voz e braille</a></li>
+              <li><a href="#testes">Roteiro de testes</a></li>
+              <li><a href="#solucoes">Soluções para problemas</a></li>
+            </ol>
+          </nav>
+        </aside>
+
+        <article class="documentation-article" aria-labelledby="artigo-titulo">
+          <header class="article-header">
+            <p class="article-label">Exemplo educacional</p>
+            <h2 id="artigo-titulo">Guia prático do leitor de telas NVDA</h2>
+            <p>Este artigo é um exemplo de documentação para aprendizagem. Ele resume conceitos e procedimentos úteis, mas não substitui o manual oficial do NVDA nem as orientações da sua organização.</p>
+          </header>
+
+          <section class="article-section" id="introducao" data-search-item>
+            <h2>1. Introdução ao NVDA</h2>
+            <p>NVDA é a sigla de <span lang="en">NonVisual Desktop Access</span>. Trata-se de um leitor de telas gratuito e de código aberto que transforma informações visuais do Windows e de aplicações compatíveis em fala sintetizada ou em saída para uma linha braille. Seu objetivo é permitir que pessoas cegas ou com baixa visão percebam o conteúdo, entendam a estrutura da interface e operem controles principalmente pelo teclado.</p>
+            <p>Um leitor de telas não “enxerga” a página como uma captura de imagem. Ele consulta informações expostas pelo sistema operacional e pela árvore de acessibilidade: nome, função, valor, estado, descrição e relações entre elementos. Por isso, HTML semântico, rótulos claros e uma ordem de foco coerente são essenciais.</p>
+            <div class="article-note">
+              <h3>Importante para quem desenvolve</h3>
+              <p>Ouvir uma página com NVDA ajuda a encontrar barreiras, mas não representa toda a experiência de pessoas usuárias. Combine testes automatizados, inspeção de código, navegação por teclado e avaliações com pessoas com deficiência.</p>
+            </div>
+          </section>
+
+          <section class="article-section" id="recursos" data-search-item>
+            <h2>2. Principais recursos</h2>
+            <p>O NVDA oferece recursos para uso cotidiano, estudo, trabalho e avaliação de acessibilidade:</p>
+            <ul>
+              <li>leitura de textos, menus, caixas de diálogo, notificações e controles do Windows;</li>
+              <li>navegação estrutural por títulos, links, listas, tabelas, regiões, botões e campos de formulário;</li>
+              <li>anúncio do nome, da função, do estado e do valor de elementos interativos;</li>
+              <li>suporte a diferentes sintetizadores de voz, idiomas e velocidades de fala;</li>
+              <li>compatibilidade com diversas linhas braille atualizáveis;</li>
+              <li>modo de navegação para leitura e modo de foco para interação direta com aplicações;</li>
+              <li>visualizador de fala, útil para acompanhar em texto o que seria pronunciado;</li>
+              <li>registro de eventos e visualizador de log para diagnóstico técnico;</li>
+              <li>complementos que ampliam funções, desde que obtidos de fontes confiáveis e compatíveis com a versão instalada;</li>
+              <li>versão portátil, que pode ser executada sem uma instalação tradicional quando a política do computador permitir.</li>
+            </ul>
+          </section>
+
+          <section class="article-section" id="usos" data-search-item>
+            <h2>3. Usos suportados</h2>
+            <p>O NVDA pode apoiar a leitura e a operação de páginas web em navegadores compatíveis, documentos, e-mail, ferramentas de produtividade, explorador de arquivos, configurações do sistema e outras aplicações que exponham informações acessíveis. O nível de suporte varia conforme a versão do NVDA, do Windows, do navegador e do próprio aplicativo.</p>
+            <div class="article-grid">
+              <section>
+                <h3>Na web</h3>
+                <p>Permite percorrer conteúdo linearmente ou saltar entre estruturas como títulos, regiões, links, campos, tabelas e listas. Também anuncia atualizações que foram implementadas adequadamente como regiões dinâmicas.</p>
+              </section>
+              <section>
+                <h3>Em aplicações</h3>
+                <p>Interage com controles nativos e com componentes personalizados que forneçam nome, função, estado, valor e ações pela API de acessibilidade do sistema.</p>
+              </section>
+              <section>
+                <h3>Em avaliações</h3>
+                <p>Ajuda a verificar se a interface comunica estrutura, propósito e mudanças de estado sem depender apenas da apresentação visual.</p>
+              </section>
+              <section>
+                <h3>Com braille</h3>
+                <p>Pode apresentar texto e informações de controles em uma linha braille compatível, oferecendo outra forma de leitura e navegação.</p>
+              </section>
+            </div>
+            <p>Conteúdo composto somente por imagem, controles que respondem apenas ao mouse ou componentes que ocultam sua semântica podem permanecer inacessíveis. O leitor de telas não corrige a implementação da interface.</p>
+          </section>
+
+          <section class="article-section" id="requisitos" data-search-item>
+            <h2>4. Requisitos do sistema</h2>
+            <p>Antes de instalar, confirme as regras da organização e mantenha uma cópia de segurança das configurações importantes. Para este exemplo educacional, considere os seguintes requisitos de referência:</p>
+            <div class="table-wrapper" tabindex="0" role="region" aria-label="Tabela de requisitos do NVDA">
+              <table>
+                <caption>Requisitos de referência para instalação e uso</caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Item</th>
+                    <th scope="col">Requisito</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">Sistema operacional</th>
+                    <td>Windows 10 ou Windows 11, nas edições de 32 ou 64 bits ainda compatíveis com a versão do NVDA utilizada.</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Ambiente de servidor</th>
+                    <td>Windows Server 2016, 2019, 2022 ou versão posterior compatível, com componentes de áudio e permissões adequadas ao ambiente.</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Armazenamento</th>
+                    <td>Pelo menos 500 MB livres para o aplicativo, atualizações, configurações e arquivos temporários.</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Memória</th>
+                    <td>4 GB de RAM recomendados para uma experiência estável em conjunto com navegador e outras aplicações.</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Entrada e saída</th>
+                    <td>Teclado; dispositivo de áudio para fala ou linha braille compatível para saída tátil.</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Permissões</th>
+                    <td>Permissão de instalação quando necessária. A cópia portátil pode ser uma alternativa, conforme as políticas locais.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p>Os requisitos oficiais podem mudar entre versões. Em ambientes corporativos ou Windows Server, valide compatibilidade, políticas de segurança e acesso ao áudio com a equipe responsável.</p>
+          </section>
+
+          <section class="article-section" id="primeiros-passos" data-search-item>
+            <h2>5. Primeiros passos</h2>
+            <ol>
+              <li><strong>Obtenha o instalador de uma fonte oficial.</strong> Verifique versão, idioma e orientações de segurança antes de executar o arquivo.</li>
+              <li><strong>Escolha instalar ou criar uma cópia portátil.</strong> A instalação integra melhor o NVDA ao Windows; a cópia portátil é útil quando não se deseja alterar o computador.</li>
+              <li><strong>Defina o início automático com cuidado.</strong> Em um computador compartilhado, avalie se o leitor deve iniciar na tela de entrada ou apenas depois do login.</li>
+              <li><strong>Conheça a tecla NVDA.</strong> Por padrão, <kbd>Insert</kbd> ou <kbd>Caps Lock</kbd> pode atuar como tecla modificadora do NVDA, conforme a configuração de teclado escolhida.</li>
+              <li><strong>Abra o menu do NVDA.</strong> Pressione <kbd>NVDA</kbd> + <kbd>N</kbd> para acessar preferências, ferramentas e ajuda.</li>
+              <li><strong>Faça uma leitura inicial.</strong> Use <kbd>NVDA</kbd> + <kbd>Seta para baixo</kbd> para iniciar a leitura contínua a partir da posição atual.</li>
+            </ol>
+            <p>O modificador será escrito como <kbd>NVDA</kbd> ao longo deste guia. Se você configurou <kbd>Caps Lock</kbd> como tecla NVDA e precisa ativar letras maiúsculas, pressione-a duas vezes rapidamente.</p>
+          </section>
+
+          <section class="article-section" id="modos-navegacao" data-search-item>
+            <h2>6. Modos de navegação e foco</h2>
+            <h3>Modo de navegação</h3>
+            <p>Usado principalmente para ler documentos e páginas web. As setas percorrem o conteúdo como um cursor virtual, e letras únicas saltam entre tipos de elemento. Nesse modo, pressionar <kbd>H</kbd> avança para o próximo título e <kbd>K</kbd> avança para o próximo link.</p>
+            <h3>Modo de foco</h3>
+            <p>Usado para operar diretamente um controle, como digitar em um campo, escolher uma opção ou interagir com um aplicativo web. O NVDA costuma alternar automaticamente ao entrar em controles editáveis. <kbd>NVDA</kbd> + <kbd>Espaço</kbd> alterna manualmente entre os modos.</p>
+            <h3>Foco do teclado e cursor virtual</h3>
+            <p>O foco do teclado indica qual controle receberá uma ação. O cursor virtual representa a posição de leitura. Eles podem estar em pontos diferentes, portanto confirme o anúncio antes de ativar um elemento. Use <kbd>Tab</kbd> e <kbd>Shift</kbd> + <kbd>Tab</kbd> para percorrer controles focáveis na ordem prevista pela interface.</p>
+            <div class="article-note">
+              <h3>Sinal sonoro de mudança</h3>
+              <p>Por padrão, o NVDA pode emitir sons quando alterna entre os modos. Aprender esse retorno evita enviar letras de navegação para um campo ou, no sentido inverso, digitar sem estar no controle desejado.</p>
+            </div>
+          </section>
+
+          <section class="article-section" id="comandos" data-search-item>
+            <h2>7. Comandos essenciais</h2>
+            <p>Os comandos podem variar conforme o esquema de teclado para computador de mesa ou notebook e conforme preferências pessoais. A tabela apresenta referências frequentes:</p>
+            <div class="table-wrapper" tabindex="0" role="region" aria-label="Tabela de comandos essenciais do NVDA">
+              <table>
+                <caption>Atalhos comuns no esquema de teclado para computador de mesa</caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Ação</th>
+                    <th scope="col">Comando</th>
+                    <th scope="col">Resultado esperado</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">Parar a fala</th>
+                    <td><kbd>Ctrl</kbd></td>
+                    <td>Interrompe imediatamente o anúncio atual.</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Pausar ou retomar a fala</th>
+                    <td><kbd>Shift</kbd></td>
+                    <td>Pausa a fala; quando o sintetizador oferece suporte, retoma do mesmo ponto.</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Menu do NVDA</th>
+                    <td><kbd>NVDA</kbd> + <kbd>N</kbd></td>
+                    <td>Abre preferências, ferramentas, ajuda e opções de saída.</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Informar título</th>
+                    <td><kbd>NVDA</kbd> + <kbd>T</kbd></td>
+                    <td>Anuncia o título da janela ou do documento atual.</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Informar foco</th>
+                    <td><kbd>NVDA</kbd> + <kbd>Tab</kbd></td>
+                    <td>Anuncia o controle que possui foco e seu estado.</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Leitura contínua</th>
+                    <td><kbd>NVDA</kbd> + <kbd>Seta para baixo</kbd></td>
+                    <td>Lê do ponto atual até o fim ou até ser interrompido.</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Alternar modos</th>
+                    <td><kbd>NVDA</kbd> + <kbd>Espaço</kbd></td>
+                    <td>Alterna entre modo de navegação e modo de foco.</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Lista de elementos</th>
+                    <td><kbd>NVDA</kbd> + <kbd>F7</kbd></td>
+                    <td>Lista links, títulos, regiões e outros elementos disponíveis.</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Ajuda de entrada</th>
+                    <td><kbd>NVDA</kbd> + <kbd>1</kbd></td>
+                    <td>Anuncia a função das teclas pressionadas sem executar seus comandos.</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Encerrar o NVDA</th>
+                    <td><kbd>NVDA</kbd> + <kbd>Q</kbd></td>
+                    <td>Abre a confirmação para sair do leitor de telas.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="article-section" id="web" data-search-item>
+            <h2>8. Navegação eficiente na web</h2>
+            <p>No modo de navegação, teclas de navegação rápida ajudam a formar um mapa mental da página. Use <kbd>Shift</kbd> junto da tecla para voltar ao elemento anterior.</p>
+            <dl class="shortcut-list">
+              <div><dt><kbd>H</kbd></dt><dd>próximo título;</dd></div>
+              <div><dt><kbd>1</kbd> a <kbd>6</kbd></dt><dd>próximo título do nível correspondente;</dd></div>
+              <div><dt><kbd>D</kbd></dt><dd>próxima região ou marco de navegação;</dd></div>
+              <div><dt><kbd>K</kbd></dt><dd>próximo link;</dd></div>
+              <div><dt><kbd>B</kbd></dt><dd>próximo botão;</dd></div>
+              <div><dt><kbd>F</kbd></dt><dd>próximo campo de formulário;</dd></div>
+              <div><dt><kbd>T</kbd></dt><dd>próxima tabela;</dd></div>
+              <div><dt><kbd>L</kbd></dt><dd>próxima lista;</dd></div>
+            </dl>
+            <h3>O que observar em uma página</h3>
+            <ul>
+              <li>o título da página identifica assunto e contexto;</li>
+              <li>o título principal é claro e os níveis seguintes não são usados apenas pelo tamanho visual;</li>
+              <li>as regiões de cabeçalho, navegação, conteúdo principal e rodapé ajudam a orientar;</li>
+              <li>textos de links fazem sentido fora do parágrafo, evitando repetições vagas como “clique aqui”;</li>
+              <li>imagens informativas têm alternativas equivalentes e imagens decorativas não geram ruído;</li>
+              <li>o foco percorre os controles em ordem lógica e permanece visível;</li>
+              <li>mudanças importantes são anunciadas sem mover o foco inesperadamente.</li>
+            </ul>
+          </section>
+
+          <section class="article-section" id="formularios" data-search-item>
+            <h2>9. Formulários e componentes interativos</h2>
+            <p>Ao chegar a um campo, o NVDA deve anunciar seu rótulo, função, valor, estado e instruções relevantes. Um campo obrigatório precisa comunicar essa condição; uma mensagem de erro deve explicar o problema e como corrigi-lo.</p>
+            <h3>Sequência de verificação</h3>
+            <ol>
+              <li>Use <kbd>F</kbd> ou <kbd>Tab</kbd> para chegar ao campo.</li>
+              <li>Confirme se o rótulo anunciado descreve o dado esperado.</li>
+              <li>Verifique tipo, estado obrigatório, valor atual e instruções associadas.</li>
+              <li>Digite um valor inválido e envie somente em ambiente de teste.</li>
+              <li>Confirme se o erro é anunciado, associado ao campo e permanece disponível para releitura.</li>
+              <li>Corrija o valor e verifique se o estado de erro é atualizado.</li>
+            </ol>
+            <h3>Nome, função, valor e estado</h3>
+            <p>Um botão “Mostrar senha”, por exemplo, deve ser exposto como botão, ter esse nome acessível e comunicar quando a senha está visível. Uma aparência semelhante a botão aplicada a um elemento sem semântica não oferece automaticamente acionamento por teclado nem a função correta na árvore de acessibilidade.</p>
+            <p>Prefira elementos HTML nativos. Use ARIA apenas para complementar a semântica quando necessário; ARIA não adiciona por conta própria comportamento de teclado, foco ou validação.</p>
+          </section>
+
+          <section class="article-section" id="configuracao" data-search-item>
+            <h2>10. Configuração de voz, fala e braille</h2>
+            <h3>Voz e sintetizador</h3>
+            <p>No menu <strong>Preferências</strong>, ajuste sintetizador, voz, idioma, velocidade, tonalidade, volume e nível de pontuação. Uma velocidade alta pode ser produtiva para pessoas experientes, mas quem está aprendendo costuma compreender melhor com fala mais lenta.</p>
+            <p>O anel de configurações de voz permite alterar opções frequentes pelo teclado. Consulte a ajuda de comandos da versão instalada, pois os atalhos diferem entre esquemas de teclado.</p>
+            <h3>Pontuação e formatação</h3>
+            <p>O nível de pontuação controla quais símbolos são falados. Informações de formatação, como títulos, listas, erros ortográficos e mudanças de estilo, podem ser ativadas conforme a tarefa. Evite habilitar todos os anúncios ao mesmo tempo durante uma leitura comum, pois o excesso pode ocultar informações importantes.</p>
+            <h3>Linhas braille</h3>
+            <p>Em <strong>Configurações de braille</strong>, escolha a linha compatível, a tabela de tradução e como a saída acompanha o foco ou o cursor de leitura. Verifique a documentação do fabricante para conexão, teclas de deslocamento e eventuais drivers. Não suponha que um teste apenas com fala cobre a experiência de leitura em braille.</p>
+            <h3>Perfis de configuração</h3>
+            <p>Perfis permitem aplicar preferências diferentes a tarefas ou aplicações. Um perfil para revisão de texto pode anunciar mais formatação, enquanto outro para navegação pode priorizar velocidade e estrutura.</p>
+          </section>
+
+          <section class="article-section" id="testes" data-search-item>
+            <h2>11. Roteiro de testes de acessibilidade</h2>
+            <p>Antes de começar, feche informações confidenciais, use dados de teste e escolha uma combinação de navegador e leitor de telas compatível com a matriz do projeto.</p>
+            <ol class="test-steps">
+              <li>
+                <h3>Identifique a página</h3>
+                <p>Ouça o título da janela com <kbd>NVDA</kbd> + <kbd>T</kbd> e confirme idioma, título principal e objetivo.</p>
+              </li>
+              <li>
+                <h3>Explore a estrutura</h3>
+                <p>Abra a lista de elementos com <kbd>NVDA</kbd> + <kbd>F7</kbd>. Verifique títulos, links e regiões, depois percorra o conteúdo linearmente.</p>
+              </li>
+              <li>
+                <h3>Teste a ordem de foco</h3>
+                <p>Use <kbd>Tab</kbd> e <kbd>Shift</kbd> + <kbd>Tab</kbd>. Todo controle operável deve receber foco em sequência lógica, sem armadilhas.</p>
+              </li>
+              <li>
+                <h3>Acione os controles</h3>
+                <p>Use <kbd>Enter</kbd> e <kbd>Espaço</kbd> conforme o controle. Confirme nome, função, estado e retorno da ação.</p>
+              </li>
+              <li>
+                <h3>Valide formulários</h3>
+                <p>Confira rótulos, instruções, agrupamentos, obrigatoriedade, mensagens de erro e confirmação sem depender apenas de cor.</p>
+              </li>
+              <li>
+                <h3>Observe conteúdo dinâmico</h3>
+                <p>Abra menus, diálogos e avisos. Verifique foco inicial, fechamento, restauração do foco e anúncios oportunos.</p>
+              </li>
+              <li>
+                <h3>Registre evidências</h3>
+                <p>Anote página, navegador, versões, passos, resultado esperado, resultado percebido e impacto para a pessoa usuária.</p>
+              </li>
+            </ol>
+            <div class="article-note">
+              <h3>Evite um falso positivo</h3>
+              <p>Um anúncio compreensível não garante que a pessoa consiga concluir a tarefa. Teste o fluxo completo: localizar, compreender, operar, confirmar o resultado e recuperar-se de erros.</p>
+            </div>
+          </section>
+
+          <section class="article-section" id="solucoes" data-search-item>
+            <h2>12. Soluções para problemas comuns</h2>
+            <div class="troubleshooting-list">
+              <section>
+                <h3>Não há fala</h3>
+                <p>Confirme volume, dispositivo de saída, sintetizador selecionado e se a fala foi interrompida. Reinicie somente o NVDA antes de reiniciar todo o computador.</p>
+              </section>
+              <section>
+                <h3>A página parece não atualizar</h3>
+                <p>Use o comando de atualização do documento do NVDA ou recarregue a página com cuidado. Se o problema persistir, verifique se a aplicação expõe a mudança na árvore de acessibilidade.</p>
+              </section>
+              <section>
+                <h3>As teclas digitam em vez de navegar</h3>
+                <p>Você pode estar no modo de foco. Pressione <kbd>NVDA</kbd> + <kbd>Espaço</kbd> e confirme o anúncio do modo de navegação.</p>
+              </section>
+              <section>
+                <h3>Um controle não tem nome</h3>
+                <p>Trate como possível barreira da interface. Inspecione o HTML e a árvore de acessibilidade; não crie uma configuração local apenas para ocultar o defeito.</p>
+              </section>
+              <section>
+                <h3>Comandos não correspondem ao guia</h3>
+                <p>Confira o esquema de teclado, a tecla NVDA configurada, a versão instalada e alterações feitas por complementos. Ative a ajuda de entrada com <kbd>NVDA</kbd> + <kbd>1</kbd>.</p>
+              </section>
+              <section>
+                <h3>O NVDA ficou instável</h3>
+                <p>Teste sem complementos incompatíveis, consulte o visualizador de log e preserve os passos de reprodução. Em equipamento gerenciado, encaminhe as evidências à equipe de suporte.</p>
+              </section>
+            </div>
+          </section>
+
+          <section class="article-section" id="boas-praticas" data-search-item>
+            <h2>13. Boas práticas e limites desta referência</h2>
+            <ul>
+              <li>Teste com versões explicitamente definidas de sistema, navegador e NVDA.</li>
+              <li>Não use dados pessoais ou confidenciais em ambientes de demonstração.</li>
+              <li>Não conclua que uma interface é acessível apenas porque “o NVDA leu”.</li>
+              <li>Não altere configurações da pessoa usuária sem consentimento.</li>
+              <li>Documente comandos personalizados e complementos que possam mudar os resultados.</li>
+              <li>Consulte a ajuda incluída na versão instalada para detalhes atualizados.</li>
+            </ul>
+            <p>Esta documentação foi criada como material educacional do DEV A11Y. Os nomes de menus, a compatibilidade e os atalhos podem mudar. Para uma decisão de implantação, confirme as informações na documentação oficial correspondente à versão escolhida.</p>
+          </section>
+
+          <footer class="article-footer">
+            <p><strong>Próximo passo:</strong> pratique a leitura estrutural e a operação por teclado nos exemplos de <a href="blog.html">Tutoriais</a>, depois registre conteúdo acessível em <a href="post.html">Criar conteúdo</a>.</p>
+            <a href="#conteudo-principal">Voltar ao início do conteúdo</a>
+          </footer>
+        </article>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div>
+        <a class="brand" href="../index.html">DEV A11Y</a>
+        <p>Aprendizado prático para uma web mais acessível.</p>
+      </div>
+      <nav class="footer-nav" aria-label="Navegação do rodapé">
+        <a href="blog.html">Tutoriais</a>
+        <a href="documentacao.html" aria-current="page">Documentações</a>
+        <a href="post.html">Criar conteúdo</a>
+      </nav>
+      <address>
+        <span>Contato:</span>
+        <a href="mailto:guerrierosantoslucas@gmail.com">guerrierosantoslucas@gmail.com</a>
+      </address>
+      <p>© <span data-current-year>2026</span> DEV A11Y. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <div class="live-region sr-only" data-live-region aria-live="polite" aria-atomic="true"></div>
+</body>
+</html>
