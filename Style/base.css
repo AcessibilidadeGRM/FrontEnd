@@ -343,7 +343,7 @@ button:active,
 .button--outline:hover {
     border-color: var(--color-accent);
     background: var(--color-accent);
-    color: var(--color-on-accent);
+    color: var(--color-text);
 }
 
 button:disabled,
@@ -554,6 +554,38 @@ a:hover {
     margin-inline-start: var(--space-2);
     border-radius: 50%;
     background: currentColor;
+}
+
+.auth-nav-link,
+.auth-nav-profile {
+    min-height: var(--target-size);
+    border: 0.125rem solid var(--color-accent);
+    border-radius: var(--radius-md);
+    padding: var(--space-2) var(--space-3);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-surface);
+    color: var(--color-text);
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.auth-nav-link:hover,
+.auth-nav-link:focus-visible,
+.auth-nav-profile:hover,
+.auth-nav-profile:focus-visible {
+    border-color: var(--color-accent);
+    background: var(--color-accent);
+    color: var(--color-on-accent);
+}
+
+.auth-nav-profile {
+    max-width: 12rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 html[data-palette="palette-01"] .nav-list a[aria-current="page"]::after {

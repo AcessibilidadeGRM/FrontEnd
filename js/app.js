@@ -619,6 +619,94 @@
     }
   }
 
+  function initializeAuthNav() {
+    if (typeof document.querySelector !== "function" || typeof document.createElement !== "function") {
+      return;
+    }
+
+    var body = document.body;
+    if (!body) {
+      return;
+    }
+
+    var pageType = body.getAttribute("data-page");
+    if (pageType === "login" || pageType === "signup") {
+      return;
+    }
+
+    var headerInner = document.querySelector(".header-inner, .site-header__inner, .site-header > .shell");
+    var accessTools = document.querySelector(".a11y-tools, [data-a11y-tools]");
+
+    if (!headerInner) {
+      return;
+    }
+
+    var existingControl = headerInner.querySelector("[data-auth-nav-control]");
+    if (existingControl) {
+      existingControl.remove();
+    }
+
+    var userJson = null;
+    try {
+      userJson = window.localStorage.getItem("deva11y:auth:user");
+    } catch (_error) {
+      userJson = null;
+    }
+
+    var user = null;
+    if (userJson) {
+      try {
+        user = JSON.parse(userJson);
+      } catch (_error) {
+        user = null;
+      }
+    }
+
+    var token = null;
+    try {
+      token = window.localStorage.getItem("deva11y:auth:token");
+    } catch (_error) {
+      token = null;
+    }
+
+    if (!user || !token) {
+      var loginLink = document.createElement("a");
+      loginLink.className = "auth-nav-link";
+      loginLink.href = "./html/login.html";
+      loginLink.textContent = "Entrar";
+      loginLink.setAttribute("data-auth-nav-control", "true");
+
+      if (window.location.pathname.indexOf("/html/") !== -1 || window.location.pathname.indexOf("\\html\\") !== -1) {
+        loginLink.href = "login.html";
+      }
+
+      if (window.location.pathname.indexOf("/index.html") !== -1 || window.location.pathname.indexOf("\\index.html") !== -1) {
+        loginLink.href = "./html/login.html";
+      }
+
+      if (headerInner && accessTools) {
+        headerInner.insertBefore(loginLink, accessTools);
+      } else if (headerInner) {
+        headerInner.appendChild(loginLink);
+      }
+      return;
+    }
+
+    var profileButton = document.createElement("button");
+    profileButton.className = "auth-nav-profile";
+    profileButton.type = "button";
+    profileButton.setAttribute("data-auth-nav-control", "true");
+    profileButton.setAttribute("aria-label", "Perfil de " + user.name);
+    profileButton.setAttribute("title", user.name);
+    profileButton.textContent = user.name || "Perfil";
+
+    if (headerInner && accessTools) {
+      headerInner.insertBefore(profileButton, accessTools);
+    } else if (headerInner) {
+      headerInner.appendChild(profileButton);
+    }
+  }
+
   function initialize() {
     var initializers = [
       initializePreferences,
@@ -627,7 +715,8 @@
       initializeCreationForm,
       initializePrintButtons,
       initializeImageFallbacks,
-      initializeCurrentYear
+      initializeCurrentYear,
+      initializeAuthNav
     ];
 
     for (var index = 0; index < initializers.length; index += 1) {
