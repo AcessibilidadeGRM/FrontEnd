@@ -247,22 +247,63 @@
     updateControls();
   }
 
-  function normalizeSearchText(value) {
-    var normalized = String(value || "");
-
-    if (typeof normalized.normalize === "function") {
-      normalized = normalized.normalize("NFD");
-    } else {
-      normalized = normalized.replace(/[ÁÀÂÃÄáàâãä]/g, "a");
-      normalized = normalized.replace(/[ÉÈÊËéèêë]/g, "e");
-      normalized = normalized.replace(/[ÍÌÎÏíìîï]/g, "i");
-      normalized = normalized.replace(/[ÓÒÔÕÖóòôõö]/g, "o");
-      normalized = normalized.replace(/[ÚÙÛÜúùûü]/g, "u");
-      normalized = normalized.replace(/[Çç]/g, "c");
+function getAuthToken() {
+      try {
+        return window.localStorage.getItem("deva11y:auth:token");
+      } catch (_error) {
+        return null;
+      }
     }
 
-    return normalized.replace(/[\u0300-\u036f]/g, "").toLowerCase();
-  }
+    function updateCreateContentLinkVisibility(token) {
+      if (typeof document.querySelectorAll !== "function") {
+        return;
+      }
+
+      var links = document.querySelectorAll('a[href$="post.html"]');
+      var hideLink = !token;
+
+      for (var index = 0; index < links.length; index += 1) {
+        var link = links[index];
+        if (!link) {
+          continue;
+        }
+
+        var listItem = link.parentElement;
+        if (listItem && listItem.tagName && listItem.tagName.toLowerCase() === "li") {
+          listItem.hidden = hideLink;
+          if (hideLink) {
+            listItem.setAttribute("aria-hidden", "true");
+          } else {
+            listItem.removeAttribute("aria-hidden");
+          }
+        } else {
+          link.hidden = hideLink;
+          if (hideLink) {
+            link.setAttribute("aria-hidden", "true");
+          } else {
+            link.removeAttribute("aria-hidden");
+          }
+        }
+      }
+    }
+
+    function normalizeSearchText(value) {
+      var normalized = String(value || "");
+
+      if (typeof normalized.normalize === "function") {
+        normalized = normalized.normalize("NFD");
+      } else {
+        normalized = normalized.replace(/[ÁÀÂÃÄáàâãä]/g, "a");
+        normalized = normalized.replace(/[ÉÈÊËéèêë]/g, "e");
+        normalized = normalized.replace(/[ÍÌÎÏíìîï]/g, "i");
+        normalized = normalized.replace(/[ÓÒÔÕÖóòôõö]/g, "o");
+        normalized = normalized.replace(/[ÚÙÛÜúùûü]/g, "u");
+        normalized = normalized.replace(/[Çç]/g, "c");
+      }
+
+      return normalized.replace(/[\u0300-\u036f]/g, "").toLowerCase();
+    }
 
   function initializeContentSearch() {
     if (
@@ -406,106 +447,116 @@
   }
 
   function initializeCreationForm() {
-    if (typeof document.querySelector !== "function") {
-      return;
-    }
+      if (typeof document.querySelector !== "function") {
+        return;
+      }
 
-    var form = document.querySelector("[data-creation-form]");
-    if (!form || typeof form.addEventListener !== "function") {
-      return;
-    }
+      var form = document.querySelector("[data-creation-form]");
+      if (!form || typeof form.addEventListener !== "function") {
+        return;
+      }
 
-    var editor = form.querySelector("[data-content-editor]");
-    var wordCounter = form.querySelector("[data-word-count]") ||
-      document.querySelector("[data-word-count]");
-    var characterCounter = form.querySelector("[data-character-count]") ||
-      document.querySelector("[data-character-count]");
-    var status = form.querySelector("[data-form-status]") ||
-      document.querySelector("[data-form-status]");
-    var titleField = form.querySelector('[name="title"]');
-    var categoryField = form.querySelector('[name="category"]');
-    var submitButton = form.querySelector("[data-creation-submit]");
+      var editor = form.querySelector("[data-content-editor]");
+      var wordCounter = form.querySelector("[data-word-count]") ||
+        document.querySelector("[data-word-count]");
+      var characterCounter = form.querySelector("[data-character-count]") ||
+        document.querySelector("[data-character-count]");
+      var status = form.querySelector("[data-form-status]") ||
+        document.querySelector("[data-form-status]");
+      var titleField = form.querySelector('[name="title"]');
+      var categoryField = form.querySelector('[name="category"]');
+      var submitButton = form.querySelector("[data-creation-submit]");
 
-    if (
-      !editor ||
-      !wordCounter ||
-      !characterCounter ||
-      !status ||
-      !titleField ||
-      !categoryField ||
-      !submitButton ||
-      typeof editor.addEventListener !== "function"
-    ) {
-      return;
-    }
+      if (
+        !editor ||
+        !wordCounter ||
+        !characterCounter ||
+        !status ||
+        !titleField ||
+        !categoryField ||
+        !submitButton ||
+        typeof editor.addEventListener !== "function"
+      ) {
+        return;
+      }
 
-    function updateCounters() {
-      var content = editor.value;
-      var trimmedContent = content.trim();
-      var wordCount = trimmedContent === "" ? 0 : trimmedContent.split(/\s+/).length;
-      var characterCount = content.length;
+      var authToken = getAuthToken();
+      if (!authToken) {
+        status.textContent =
+          "É necessário fazer login para enviar uma proposta. Acesse Entrar para continuar.";
+        titleField.disabled = true;
+        categoryField.disabled = true;
+        editor.disabled = true;
+        submitButton.disabled = true;
+        return;
+      }
 
-      wordCounter.textContent = wordCount === 1 ? "1 palavra" : String(wordCount) + " palavras";
-      characterCounter.textContent = String(characterCount) + " de 10.000 caracteres";
-    }
+      function updateCounters() {
+        var content = editor.value;
+        var trimmedContent = content.trim();
+        var wordCount = trimmedContent === "" ? 0 : trimmedContent.split(/\s+/).length;
+        var characterCount = content.length;
 
-    function focusFirstEmptyField() {
-      var fields = [titleField, categoryField, editor];
+        wordCounter.textContent = wordCount === 1 ? "1 palavra" : String(wordCount) + " palavras";
+        characterCounter.textContent = String(characterCount) + " de 10.000 caracteres";
+      }
 
-      for (var index = 0; index < fields.length; index += 1) {
-        if (String(fields[index].value || "").trim() === "") {
-          if (typeof fields[index].focus === "function") {
-            fields[index].focus();
+      function focusFirstEmptyField() {
+        var fields = [titleField, categoryField, editor];
+
+        for (var index = 0; index < fields.length; index += 1) {
+          if (String(fields[index].value || "").trim() === "") {
+            if (typeof fields[index].focus === "function") {
+              fields[index].focus();
+            }
+            return;
+          }
+        }
+      }
+
+      editor.addEventListener("input", updateCounters);
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        if (typeof form.checkValidity === "function" && !form.checkValidity()) {
+          status.textContent = "Preencha todos os campos obrigatórios antes de continuar.";
+
+          if (typeof form.reportValidity === "function") {
+            form.reportValidity();
           }
           return;
         }
-      }
-    }
 
-    editor.addEventListener("input", updateCounters);
-    form.addEventListener("submit", function (event) {
-      event.preventDefault();
+        var title = String(titleField.value || "");
+        var category = String(categoryField.value || "");
+        var content = String(editor.value || "");
 
-      if (typeof form.checkValidity === "function" && !form.checkValidity()) {
-        status.textContent = "Preencha todos os campos obrigatórios antes de continuar.";
-
-        if (typeof form.reportValidity === "function") {
-          form.reportValidity();
+        if (title.trim() === "" || category.trim() === "" || content.trim() === "") {
+          status.textContent = "Preencha todos os campos obrigatórios antes de continuar.";
+          focusFirstEmptyField();
+          return;
         }
-        return;
-      }
 
-      var title = String(titleField.value || "");
-      var category = String(categoryField.value || "");
-      var content = String(editor.value || "");
+        try {
+          var submissionEvent = new CustomEvent("deva11y:content-submit", {
+            detail: {
+              title: title,
+              category: category,
+              content: content
+            }
+          });
+          document.dispatchEvent(submissionEvent);
+        } catch (_error) {
+          status.textContent = "Não foi possível preparar o conteúdo para integração.";
+          return;
+        }
 
-      if (title.trim() === "" || category.trim() === "" || content.trim() === "") {
-        status.textContent = "Preencha todos os campos obrigatórios antes de continuar.";
-        focusFirstEmptyField();
-        return;
-      }
+        status.textContent = "Conteúdo preparado e sinalizado para revisão.";
+      });
 
-      try {
-        var submissionEvent = new CustomEvent("deva11y:content-submit", {
-          detail: {
-            title: title,
-            category: category,
-            content: content
-          }
-        });
-        document.dispatchEvent(submissionEvent);
-      } catch (_error) {
-        status.textContent = "Não foi possível preparar o conteúdo para integração.";
-        return;
-      }
-
-      status.textContent = "Conteúdo preparado e sinalizado para revisão.";
-    });
-
-    updateCounters();
-    submitButton.disabled = false;
-  }
-
+      updateCounters();
+      submitButton.disabled = false;
+    }
   function initializePrintButtons() {
     if (typeof document.querySelectorAll !== "function" || typeof window.print !== "function") {
       return;
@@ -630,6 +681,9 @@
     }
 
     var pageType = body.getAttribute("data-page");
+    var token = getAuthToken();
+    updateCreateContentLinkVisibility(token);
+
     if (pageType === "login" || pageType === "signup") {
       return;
     }
@@ -662,13 +716,6 @@
       }
     }
 
-    var token = null;
-    try {
-      token = window.localStorage.getItem("deva11y:auth:token");
-    } catch (_error) {
-      token = null;
-    }
-
     if (!user || !token) {
       var loginLink = document.createElement("a");
       loginLink.className = "auth-nav-link";
@@ -696,9 +743,12 @@
     profileButton.className = "auth-nav-profile";
     profileButton.type = "button";
     profileButton.setAttribute("data-auth-nav-control", "true");
-    profileButton.setAttribute("aria-label", "Perfil de " + user.name);
-    profileButton.setAttribute("title", user.name);
-    profileButton.textContent = user.name || "Perfil";
+    profileButton.setAttribute(
+      "aria-label",
+      user && user.name ? "Perfil de " + user.name : "Perfil"
+    );
+    profileButton.setAttribute("title", user && user.name ? user.name : "Perfil");
+    profileButton.textContent = user && user.name ? user.name : "Perfil";
 
     if (headerInner && accessTools) {
       headerInner.insertBefore(profileButton, accessTools);
