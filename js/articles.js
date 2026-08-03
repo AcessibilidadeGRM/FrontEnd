@@ -46,6 +46,19 @@
     }
   }
 
+  function cleanMarkdownExcerpt(text) {
+    var raw = String(text || "");
+
+    raw = raw.replace(/^\s*([#>]+)\s*/gm, "");
+    raw = raw.replace(/^[\s]*([-*+]\s+)/gm, "");
+    raw = raw.replace(/[`*_~]/g, "");
+    raw = raw.replace(/\[(.*?)\]\((.*?)\)/g, "$1");
+    raw = raw.replace(/\s{2,}/g, " ");
+    raw = raw.replace(/(^\s+|\s+$)/g, "");
+
+    return raw;
+  }
+
   function createArticleCard(article) {
     var card = document.createElement("a");
     card.className = "article-card";
@@ -74,10 +87,14 @@
 
     var excerpt = document.createElement("p");
     excerpt.className = "article-excerpt";
-    excerpt.textContent = article.content
-      ? article.content.trim().slice(0, 220) +
-        (article.content.length > 220 ? "…" : "")
-      : "Sem resumo disponível.";
+
+    if (article.content) {
+      var cleaned = cleanMarkdownExcerpt(article.content);
+      excerpt.textContent =
+        cleaned.slice(0, 220) + (cleaned.length > 220 ? "…" : "");
+    } else {
+      excerpt.textContent = "Sem resumo disponível.";
+    }
 
     card.appendChild(title);
     card.appendChild(meta);
