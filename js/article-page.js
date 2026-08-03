@@ -23,6 +23,42 @@
     }
   }
 
+  function isMarkdownEnabled() {
+    return typeof window.marked === "function" || typeof window.marked === "object";
+  }
+
+  function sanitizeHtml(html) {
+    if (typeof window.DOMPurify === "object" && typeof window.DOMPurify.sanitize === "function") {
+      return window.DOMPurify.sanitize(html);
+    }
+    return html;
+  }
+
+  function renderMarkdown(content) {
+    var raw = String(content || "");
+
+    if (isMarkdownEnabled()) {
+      try {
+        return sanitizeHtml(window.marked.parse(raw));
+      } catch (_error) {
+        // fallback to plain text if marked fails
+      }
+    }
+
+    return raw
+      .split(/\n\n+/)
+      .map(function (paragraph) {
+        return "<p>" +
+          String(paragraph)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/\n/g, "<br>") +
+          "</p>";
+      })
+      .join("");
+  }
+
   function renderArticle(article) {
     var titleElement = document.getElementById("titulo-artigo");
     var metaElement = document.getElementById("article-meta");
@@ -43,14 +79,7 @@
     metaElement.textContent = article.category ? "Categoria: " + article.category : "Categoria não informada";
 
     var content = article.content || "Conteúdo não disponível.";
-    bodyElement.innerHTML = "";
-
-    var paragraphs = String(content).split(/\n\n+/);
-    paragraphs.forEach(function (paragraph) {
-      var p = document.createElement("p");
-      p.textContent = paragraph;
-      bodyElement.appendChild(p);
-    });
+    bodyElement.innerHTML = renderMarkdown(content);
 
     if (Array.isArray(article.sections) && article.sections.length > 0) {
       article.sections.forEach(function (section) {
