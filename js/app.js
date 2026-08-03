@@ -466,6 +466,11 @@ function getAuthToken() {
       var titleField = form.querySelector('[name="title"]');
       var categoryField = form.querySelector('[name="category"]');
       var submitButton = form.querySelector("[data-creation-submit]");
+      var previewButton = form.querySelector("[data-preview-button]");
+      var previewDialog = document.querySelector(".preview-dialog");
+      var previewContent = document.querySelector("[data-preview-content]");
+      var previewClose = document.querySelector("[data-preview-close]");
+      var previewBackdrop = document.querySelector("[data-preview-backdrop]");
 
       if (
         !editor ||
@@ -513,6 +518,77 @@ function getAuthToken() {
           }
         }
       }
+
+      function openPreview(content) {
+        if (!previewDialog || !previewContent) {
+          return;
+        }
+
+        var markdown = String(content || "");
+        var html = markdown
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/\n/g, "<br>");
+
+        var parseMarkdown = null;
+
+        if (typeof window.marked === "object" && typeof window.marked.parse === "function") {
+          parseMarkdown = window.marked.parse;
+        } else if (typeof window.marked === "function") {
+          parseMarkdown = window.marked;
+        }
+
+        if (parseMarkdown) {
+          try {
+            html = parseMarkdown(markdown);
+          } catch (_error) {
+            html = html;
+          }
+        }
+
+        if (typeof window.DOMPurify === "object" && typeof window.DOMPurify.sanitize === "function") {
+          html = window.DOMPurify.sanitize(html);
+        }
+
+        previewContent.innerHTML = html;
+        previewDialog.hidden = false;
+
+        if (previewClose && typeof previewClose.focus === "function") {
+          previewClose.focus();
+        }
+      }
+
+      function closePreview() {
+        if (!previewDialog) {
+          return;
+        }
+
+        previewDialog.hidden = true;
+        if (typeof previewButton.focus === "function") {
+          previewButton.focus();
+        }
+      }
+
+      if (previewButton && typeof previewButton.addEventListener === "function") {
+        previewButton.addEventListener("click", function () {
+          openPreview(editor.value);
+        });
+      }
+
+      if (previewClose && typeof previewClose.addEventListener === "function") {
+        previewClose.addEventListener("click", closePreview);
+      }
+
+      if (previewBackdrop && typeof previewBackdrop.addEventListener === "function") {
+        previewBackdrop.addEventListener("click", closePreview);
+      }
+
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape" && previewDialog && !previewDialog.hidden) {
+          closePreview();
+        }
+      });
 
       editor.addEventListener("input", updateCounters);
       form.addEventListener("submit", function (event) {
