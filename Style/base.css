@@ -368,6 +368,51 @@ a:hover {
     text-decoration-thickness: 0.2rem;
 }
 
+.article-card {
+    display: block;
+    width: 100%;
+    padding: 1.5rem;
+    border: 0.2rem solid var(--color-text);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    text-decoration: none;
+    color: var(--color-text);
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.08);
+    transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast), background-color var(--transition-fast);
+    margin-bottom: 1.25rem;
+}
+
+.article-card:hover,
+.article-card:focus-visible,
+.article-card:focus {
+    transform: translateY(-0.25rem);
+    border-color: var(--color-accent);
+    background: rgba(17, 108, 209, 0.04);
+    box-shadow: 0 0.75rem 1.25rem rgba(0,0,0,0.12);
+}
+
+.article-card:focus-visible {
+    outline: 0.2rem solid var(--color-focus);
+    outline-offset: 0.35rem;
+}
+
+.article-card h3 {
+    margin: 0 0 0.75rem;
+    font-size: 1.35rem;
+}
+
+.article-meta {
+    margin: 0 0 1rem;
+    color: var(--color-muted);
+    font-size: 0.95rem;
+}
+
+.article-excerpt {
+    margin: 0;
+    line-height: 1.7;
+    max-width: 78ch;
+}
+
 :focus-visible {
     outline: 0.2rem solid var(--color-focus);
     outline-offset: 0.2rem;
