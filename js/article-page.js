@@ -59,12 +59,13 @@
       .join("");
   }
 
-  function renderArticle(article) {
+  function renderArticle(article, authorName) {
     var titleElement = document.getElementById("titulo-artigo");
     var metaElement = document.getElementById("article-meta");
     var bodyElement = document.getElementById("article-body");
+    var authorElement = document.getElementById("article-author");
 
-    if (!titleElement || !metaElement || !bodyElement) {
+    if (!titleElement || !metaElement || !bodyElement || !authorElement) {
       return;
     }
 
@@ -72,11 +73,13 @@
       titleElement.textContent = "Artigo não encontrado";
       metaElement.textContent = "Não foi possível carregar os detalhes do artigo.";
       bodyElement.innerHTML = "<p>Volte para <a href=\"artigos.html\">Artigos</a> e selecione um item.</p>";
+      authorElement.textContent = "";
       return;
     }
 
     titleElement.textContent = article.title || "Título não informado";
     metaElement.textContent = article.category ? "Categoria: " + article.category : "Categoria não informada";
+    authorElement.textContent = authorName ? "Autor: " + authorName : "Autor não informado";
 
     var content = article.content || "Conteúdo não disponível.";
     bodyElement.innerHTML = renderMarkdown(content);
@@ -92,6 +95,46 @@
         bodyElement.appendChild(sectionText);
       });
     }
+  }
+
+  function loadAuthorName(authorId, callback) {
+    if (!authorId || !callback || typeof callback !== "function") {
+      callback(null);
+      return;
+    }
+
+    var endpoint = "http://127.0.0.1:5000/v1/user/" + encodeURIComponent(authorId);
+
+    if (typeof window.fetch !== "function") {
+      callback(null);
+      return;
+    }
+
+    window.fetch(endpoint, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+      },
+    })
+      .then(function (response) {
+        return response.json().then(function (data) {
+          return {
+            ok: response.ok,
+            data: data,
+          };
+        });
+      })
+      .then(function (result) {
+        if (!result.ok || !result.data || !result.data.name) {
+          callback(null);
+          return;
+        }
+
+        callback(result.data.name);
+      })
+      .catch(function () {
+        callback(null);
+      });
   }
 
   function determineArticle() {
@@ -122,7 +165,20 @@
 
   function initialize() {
     var article = determineArticle();
-    renderArticle(article);
+
+    if (!article || typeof article !== "object") {
+      renderArticle(null);
+      return;
+    }
+
+    if (article.author) {
+      loadAuthorName(article.author, function (authorName) {
+        renderArticle(article, authorName);
+      });
+      return;
+    }
+
+    renderArticle(article, null);
   }
 
   if (document.readyState === "loading" && typeof document.addEventListener === "function") {

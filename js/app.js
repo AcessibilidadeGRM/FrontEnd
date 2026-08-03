@@ -746,6 +746,55 @@ function getAuthToken() {
     }
   }
 
+  function getLoginPageHref() {
+    var href = "login.html";
+    var path = window.location.pathname || "";
+
+    if (path.indexOf("/html/") === -1 && path.indexOf("\\html\\") === -1) {
+      href = "./html/login.html";
+    }
+
+    if (path.indexOf("/index.html") !== -1 || path.indexOf("\\index.html") !== -1) {
+      href = "./html/login.html";
+    }
+
+    return href;
+  }
+
+  function clearAuthUser() {
+    try {
+      window.localStorage.removeItem("deva11y:auth:token");
+      window.localStorage.removeItem("deva11y:auth:user");
+    } catch (_error) {
+      // ignore
+    }
+  }
+
+  function getIndexPageHref() {
+    if (window.location.pathname.indexOf("/html/") !== -1 || window.location.pathname.indexOf("\\html\\") !== -1) {
+      return "./../index.html";
+    }
+    return "index.html";
+  }
+
+  function isCreateArticlePage() {
+    var path = window.location.pathname || "";
+    return path.indexOf("post.html") !== -1 || path.indexOf("\\post.html") !== -1;
+  }
+
+  function logoutAndRedirect() {
+    clearAuthUser();
+
+    if (isCreateArticlePage()) {
+      window.location.href = getIndexPageHref();
+      return;
+    }
+
+    if (typeof initializeAuthNav === "function") {
+      initializeAuthNav();
+    }
+  }
+
   function initializeAuthNav() {
     if (typeof document.querySelector !== "function" || typeof document.createElement !== "function") {
       return;
@@ -815,10 +864,15 @@ function getAuthToken() {
       return;
     }
 
+    var profileMenu = document.createElement("div");
+    profileMenu.className = "auth-nav-menu";
+    profileMenu.setAttribute("data-auth-nav-control", "true");
+
     var profileButton = document.createElement("button");
     profileButton.className = "auth-nav-profile";
     profileButton.type = "button";
-    profileButton.setAttribute("data-auth-nav-control", "true");
+    profileButton.setAttribute("aria-haspopup", "true");
+    profileButton.setAttribute("aria-expanded", "false");
     profileButton.setAttribute(
       "aria-label",
       user && user.name ? "Perfil de " + user.name : "Perfil"
@@ -826,10 +880,73 @@ function getAuthToken() {
     profileButton.setAttribute("title", user && user.name ? user.name : "Perfil");
     profileButton.textContent = user && user.name ? user.name : "Perfil";
 
+    var menuPanel = document.createElement("div");
+    menuPanel.className = "auth-nav-menu-panel";
+    menuPanel.setAttribute("role", "menu");
+    menuPanel.setAttribute("aria-label", "Opções do usuário");
+    menuPanel.hidden = true;
+
+    var userEmail = document.createElement("p");
+    userEmail.className = "auth-nav-menu-email";
+    userEmail.textContent = user && user.email ? user.email : "Email não disponível";
+    userEmail.setAttribute("role", "none");
+
+    var logoutButton = document.createElement("button");
+    logoutButton.className = "button auth-nav-logout";
+    logoutButton.type = "button";
+    logoutButton.setAttribute("role", "menuitem");
+    logoutButton.textContent = "Sair";
+
+    menuPanel.appendChild(userEmail);
+    menuPanel.appendChild(logoutButton);
+    profileMenu.appendChild(profileButton);
+    profileMenu.appendChild(menuPanel);
+
+    function closeProfileMenu() {
+      profileMenu.classList.remove("auth-nav-menu--open");
+      profileButton.setAttribute("aria-expanded", "false");
+      menuPanel.hidden = true;
+    }
+
+    function openProfileMenu() {
+      profileMenu.classList.add("auth-nav-menu--open");
+      profileButton.setAttribute("aria-expanded", "true");
+      menuPanel.hidden = false;
+    }
+
+    function toggleProfileMenu() {
+      if (profileMenu.classList.contains("auth-nav-menu--open")) {
+        closeProfileMenu();
+      } else {
+        openProfileMenu();
+      }
+    }
+
+    profileButton.addEventListener("click", function (event) {
+      event.stopPropagation();
+      toggleProfileMenu();
+    });
+
+    logoutButton.addEventListener("click", function () {
+      logoutAndRedirect();
+    });
+
+    window.addEventListener("click", function (event) {
+      if (!profileMenu.contains(event.target)) {
+        closeProfileMenu();
+      }
+    });
+
+    window.addEventListener("keydown", function (event) {
+      if (event.key === "Escape" || event.key === "Esc" || event.keyCode === 27) {
+        closeProfileMenu();
+      }
+    });
+
     if (headerInner && accessTools) {
-      headerInner.insertBefore(profileButton, accessTools);
+      headerInner.insertBefore(profileMenu, accessTools);
     } else if (headerInner) {
-      headerInner.appendChild(profileButton);
+      headerInner.appendChild(profileMenu);
     }
   }
 
