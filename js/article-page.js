@@ -137,19 +137,19 @@
       });
   }
 
-  function determineArticle() {
+    function determineArticle() {
     var savedArticle = getSavedArticle();
     var queryId = getQueryParam("id");
     var queryTitle = getQueryParam("title");
 
     if (queryId === "documentacao") {
-      return {
-        id: "documentacao",
-        title: "NVDA: guia de referência para começar e testar interfaces",
-        category: "Guia principal",
-        content:
-          "NVDA é a sigla de NonVisual Desktop Access. Trata-se de um leitor de telas gratuito e de código aberto que transforma informações visuais do Windows e de aplicações compatíveis em fala sintetizada ou em saída para uma linha braille. Seu objetivo é permitir que pessoas cegas ou com baixa visão percebam o conteúdo, entendam a estrutura da interface e operem controles principalmente pelo teclado."
-      };
+        return {
+            id: "documentacao",
+            title: "NVDA: guia de referência para começar e testar interfaces",
+            category: "Guia principal",
+            content:
+            "NVDA é a sigla de NonVisual Desktop Access. Trata-se de um leitor de telas gratuito e de código aberto que transforma informações visuais do Windows e de aplicações compatíveis em fala sintetizada ou em saída para uma linha braille. Seu objetivo é permitir que pessoas cegas ou com baixa visão percebam o conteúdo, entendam a estrutura da interface e operem controles principalmente pelo teclado."
+        };
     }
 
     if (savedArticle && queryId && String(savedArticle.id) === String(queryId)) {
