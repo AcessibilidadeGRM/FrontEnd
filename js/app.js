@@ -247,22 +247,63 @@
     updateControls();
   }
 
-  function normalizeSearchText(value) {
-    var normalized = String(value || "");
-
-    if (typeof normalized.normalize === "function") {
-      normalized = normalized.normalize("NFD");
-    } else {
-      normalized = normalized.replace(/[ÁÀÂÃÄáàâãä]/g, "a");
-      normalized = normalized.replace(/[ÉÈÊËéèêë]/g, "e");
-      normalized = normalized.replace(/[ÍÌÎÏíìîï]/g, "i");
-      normalized = normalized.replace(/[ÓÒÔÕÖóòôõö]/g, "o");
-      normalized = normalized.replace(/[ÚÙÛÜúùûü]/g, "u");
-      normalized = normalized.replace(/[Çç]/g, "c");
+function getAuthToken() {
+      try {
+        return window.localStorage.getItem("deva11y:auth:token");
+      } catch (_error) {
+        return null;
+      }
     }
 
-    return normalized.replace(/[\u0300-\u036f]/g, "").toLowerCase();
-  }
+    function updateCreateContentLinkVisibility(token) {
+      if (typeof document.querySelectorAll !== "function") {
+        return;
+      }
+
+      var links = document.querySelectorAll('a[href$="post.html"]');
+      var hideLink = !token;
+
+      for (var index = 0; index < links.length; index += 1) {
+        var link = links[index];
+        if (!link) {
+          continue;
+        }
+
+        var listItem = link.parentElement;
+        if (listItem && listItem.tagName && listItem.tagName.toLowerCase() === "li") {
+          listItem.hidden = hideLink;
+          if (hideLink) {
+            listItem.setAttribute("aria-hidden", "true");
+          } else {
+            listItem.removeAttribute("aria-hidden");
+          }
+        } else {
+          link.hidden = hideLink;
+          if (hideLink) {
+            link.setAttribute("aria-hidden", "true");
+          } else {
+            link.removeAttribute("aria-hidden");
+          }
+        }
+      }
+    }
+
+    function normalizeSearchText(value) {
+      var normalized = String(value || "");
+
+      if (typeof normalized.normalize === "function") {
+        normalized = normalized.normalize("NFD");
+      } else {
+        normalized = normalized.replace(/[ÁÀÂÃÄáàâãä]/g, "a");
+        normalized = normalized.replace(/[ÉÈÊËéèêë]/g, "e");
+        normalized = normalized.replace(/[ÍÌÎÏíìîï]/g, "i");
+        normalized = normalized.replace(/[ÓÒÔÕÖóòôõö]/g, "o");
+        normalized = normalized.replace(/[ÚÙÛÜúùûü]/g, "u");
+        normalized = normalized.replace(/[Çç]/g, "c");
+      }
+
+      return normalized.replace(/[\u0300-\u036f]/g, "").toLowerCase();
+    }
 
   function initializeContentSearch() {
     if (
@@ -406,106 +447,192 @@
   }
 
   function initializeCreationForm() {
-    if (typeof document.querySelector !== "function") {
-      return;
-    }
+      if (typeof document.querySelector !== "function") {
+        return;
+      }
 
-    var form = document.querySelector("[data-creation-form]");
-    if (!form || typeof form.addEventListener !== "function") {
-      return;
-    }
+      var form = document.querySelector("[data-creation-form]");
+      if (!form || typeof form.addEventListener !== "function") {
+        return;
+      }
 
-    var editor = form.querySelector("[data-content-editor]");
-    var wordCounter = form.querySelector("[data-word-count]") ||
-      document.querySelector("[data-word-count]");
-    var characterCounter = form.querySelector("[data-character-count]") ||
-      document.querySelector("[data-character-count]");
-    var status = form.querySelector("[data-form-status]") ||
-      document.querySelector("[data-form-status]");
-    var titleField = form.querySelector('[name="title"]');
-    var categoryField = form.querySelector('[name="category"]');
-    var submitButton = form.querySelector("[data-creation-submit]");
+      var editor = form.querySelector("[data-content-editor]");
+      var wordCounter = form.querySelector("[data-word-count]") ||
+        document.querySelector("[data-word-count]");
+      var characterCounter = form.querySelector("[data-character-count]") ||
+        document.querySelector("[data-character-count]");
+      var status = form.querySelector("[data-form-status]") ||
+        document.querySelector("[data-form-status]");
+      var titleField = form.querySelector('[name="title"]');
+      var categoryField = form.querySelector('[name="category"]');
+      var submitButton = form.querySelector("[data-creation-submit]");
+      var previewButton = form.querySelector("[data-preview-button]");
+      var previewDialog = document.querySelector(".preview-dialog");
+      var previewContent = document.querySelector("[data-preview-content]");
+      var previewClose = document.querySelector("[data-preview-close]");
+      var previewBackdrop = document.querySelector("[data-preview-backdrop]");
 
-    if (
-      !editor ||
-      !wordCounter ||
-      !characterCounter ||
-      !status ||
-      !titleField ||
-      !categoryField ||
-      !submitButton ||
-      typeof editor.addEventListener !== "function"
-    ) {
-      return;
-    }
+      if (
+        !editor ||
+        !wordCounter ||
+        !characterCounter ||
+        !status ||
+        !titleField ||
+        !categoryField ||
+        !submitButton ||
+        typeof editor.addEventListener !== "function"
+      ) {
+        return;
+      }
 
-    function updateCounters() {
-      var content = editor.value;
-      var trimmedContent = content.trim();
-      var wordCount = trimmedContent === "" ? 0 : trimmedContent.split(/\s+/).length;
-      var characterCount = content.length;
+      var authToken = getAuthToken();
+      if (!authToken) {
+        status.textContent =
+          "É necessário fazer login para enviar uma proposta. Acesse Entrar para continuar.";
+        titleField.disabled = true;
+        categoryField.disabled = true;
+        editor.disabled = true;
+        submitButton.disabled = true;
+        return;
+      }
 
-      wordCounter.textContent = wordCount === 1 ? "1 palavra" : String(wordCount) + " palavras";
-      characterCounter.textContent = String(characterCount) + " de 10.000 caracteres";
-    }
+      function updateCounters() {
+        var content = editor.value;
+        var trimmedContent = content.trim();
+        var wordCount = trimmedContent === "" ? 0 : trimmedContent.split(/\s+/).length;
+        var characterCount = content.length;
 
-    function focusFirstEmptyField() {
-      var fields = [titleField, categoryField, editor];
+        wordCounter.textContent = wordCount === 1 ? "1 palavra" : String(wordCount) + " palavras";
+        characterCounter.textContent = String(characterCount) + " de 10.000 caracteres";
+      }
 
-      for (var index = 0; index < fields.length; index += 1) {
-        if (String(fields[index].value || "").trim() === "") {
-          if (typeof fields[index].focus === "function") {
-            fields[index].focus();
+      function focusFirstEmptyField() {
+        var fields = [titleField, categoryField, editor];
+
+        for (var index = 0; index < fields.length; index += 1) {
+          if (String(fields[index].value || "").trim() === "") {
+            if (typeof fields[index].focus === "function") {
+              fields[index].focus();
+            }
+            return;
+          }
+        }
+      }
+
+      function openPreview(content) {
+        if (!previewDialog || !previewContent) {
+          return;
+        }
+
+        var markdown = String(content || "");
+        var html = markdown
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/\n/g, "<br>");
+
+        var parseMarkdown = null;
+
+        if (typeof window.marked === "object" && typeof window.marked.parse === "function") {
+          parseMarkdown = window.marked.parse;
+        } else if (typeof window.marked === "function") {
+          parseMarkdown = window.marked;
+        }
+
+        if (parseMarkdown) {
+          try {
+            html = parseMarkdown(markdown);
+          } catch (_error) {
+            html = html;
+          }
+        }
+
+        if (typeof window.DOMPurify === "object" && typeof window.DOMPurify.sanitize === "function") {
+          html = window.DOMPurify.sanitize(html);
+        }
+
+        previewContent.innerHTML = html;
+        previewDialog.hidden = false;
+
+        if (previewClose && typeof previewClose.focus === "function") {
+          previewClose.focus();
+        }
+      }
+
+      function closePreview() {
+        if (!previewDialog) {
+          return;
+        }
+
+        previewDialog.hidden = true;
+        if (typeof previewButton.focus === "function") {
+          previewButton.focus();
+        }
+      }
+
+      if (previewButton && typeof previewButton.addEventListener === "function") {
+        previewButton.addEventListener("click", function () {
+          openPreview(editor.value);
+        });
+      }
+
+      if (previewClose && typeof previewClose.addEventListener === "function") {
+        previewClose.addEventListener("click", closePreview);
+      }
+
+      if (previewBackdrop && typeof previewBackdrop.addEventListener === "function") {
+        previewBackdrop.addEventListener("click", closePreview);
+      }
+
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape" && previewDialog && !previewDialog.hidden) {
+          closePreview();
+        }
+      });
+
+      editor.addEventListener("input", updateCounters);
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        if (typeof form.checkValidity === "function" && !form.checkValidity()) {
+          status.textContent = "Preencha todos os campos obrigatórios antes de continuar.";
+
+          if (typeof form.reportValidity === "function") {
+            form.reportValidity();
           }
           return;
         }
-      }
-    }
 
-    editor.addEventListener("input", updateCounters);
-    form.addEventListener("submit", function (event) {
-      event.preventDefault();
+        var title = String(titleField.value || "");
+        var category = String(categoryField.value || "");
+        var content = String(editor.value || "");
 
-      if (typeof form.checkValidity === "function" && !form.checkValidity()) {
-        status.textContent = "Preencha todos os campos obrigatórios antes de continuar.";
-
-        if (typeof form.reportValidity === "function") {
-          form.reportValidity();
+        if (title.trim() === "" || category.trim() === "" || content.trim() === "") {
+          status.textContent = "Preencha todos os campos obrigatórios antes de continuar.";
+          focusFirstEmptyField();
+          return;
         }
-        return;
-      }
 
-      var title = String(titleField.value || "");
-      var category = String(categoryField.value || "");
-      var content = String(editor.value || "");
+        try {
+          var submissionEvent = new CustomEvent("deva11y:content-submit", {
+            detail: {
+              title: title,
+              category: category,
+              content: content
+            }
+          });
+          document.dispatchEvent(submissionEvent);
+        } catch (_error) {
+          status.textContent = "Não foi possível preparar o conteúdo para integração.";
+          return;
+        }
 
-      if (title.trim() === "" || category.trim() === "" || content.trim() === "") {
-        status.textContent = "Preencha todos os campos obrigatórios antes de continuar.";
-        focusFirstEmptyField();
-        return;
-      }
+        status.textContent = "Conteúdo preparado e sinalizado para revisão.";
+      });
 
-      try {
-        var submissionEvent = new CustomEvent("deva11y:content-submit", {
-          detail: {
-            title: title,
-            category: category,
-            content: content
-          }
-        });
-        document.dispatchEvent(submissionEvent);
-      } catch (_error) {
-        status.textContent = "Não foi possível preparar o conteúdo para integração.";
-        return;
-      }
-
-      status.textContent = "Conteúdo preparado e sinalizado para revisão.";
-    });
-
-    updateCounters();
-    submitButton.disabled = false;
-  }
-
+      updateCounters();
+      submitButton.disabled = false;
+    }
   function initializePrintButtons() {
     if (typeof document.querySelectorAll !== "function" || typeof window.print !== "function") {
       return;
@@ -619,6 +746,210 @@
     }
   }
 
+  function getLoginPageHref() {
+    var href = "login.html";
+    var path = window.location.pathname || "";
+
+    if (path.indexOf("/html/") === -1 && path.indexOf("\\html\\") === -1) {
+      href = "./html/login.html";
+    }
+
+    if (path.indexOf("/index.html") !== -1 || path.indexOf("\\index.html") !== -1) {
+      href = "./html/login.html";
+    }
+
+    return href;
+  }
+
+  function clearAuthUser() {
+    try {
+      window.localStorage.removeItem("deva11y:auth:token");
+      window.localStorage.removeItem("deva11y:auth:user");
+    } catch (_error) {
+      // ignore
+    }
+  }
+
+  function getIndexPageHref() {
+    if (window.location.pathname.indexOf("/html/") !== -1 || window.location.pathname.indexOf("\\html\\") !== -1) {
+      return "./../index.html";
+    }
+    return "index.html";
+  }
+
+  function isCreateArticlePage() {
+    var path = window.location.pathname || "";
+    return path.indexOf("post.html") !== -1 || path.indexOf("\\post.html") !== -1;
+  }
+
+  function logoutAndRedirect() {
+    clearAuthUser();
+
+    if (isCreateArticlePage()) {
+      window.location.href = getIndexPageHref();
+      return;
+    }
+
+    if (typeof initializeAuthNav === "function") {
+      initializeAuthNav();
+    }
+  }
+
+  function initializeAuthNav() {
+    if (typeof document.querySelector !== "function" || typeof document.createElement !== "function") {
+      return;
+    }
+
+    var body = document.body;
+    if (!body) {
+      return;
+    }
+
+    var pageType = body.getAttribute("data-page");
+    var token = getAuthToken();
+    updateCreateContentLinkVisibility(token);
+
+    if (pageType === "login" || pageType === "signup") {
+      return;
+    }
+
+    var headerInner = document.querySelector(".header-inner, .site-header__inner, .site-header > .shell");
+    var accessTools = document.querySelector(".a11y-tools, [data-a11y-tools]");
+
+    if (!headerInner) {
+      return;
+    }
+
+    var existingControl = headerInner.querySelector("[data-auth-nav-control]");
+    if (existingControl) {
+      existingControl.remove();
+    }
+
+    var userJson = null;
+    try {
+      userJson = window.localStorage.getItem("deva11y:auth:user");
+    } catch (_error) {
+      userJson = null;
+    }
+
+    var user = null;
+    if (userJson) {
+      try {
+        user = JSON.parse(userJson);
+      } catch (_error) {
+        user = null;
+      }
+    }
+
+    if (!user || !token) {
+      var loginLink = document.createElement("a");
+      loginLink.className = "auth-nav-link";
+      loginLink.href = "./html/login.html";
+      loginLink.textContent = "Entrar";
+      loginLink.setAttribute("data-auth-nav-control", "true");
+
+      if (window.location.pathname.indexOf("/html/") !== -1 || window.location.pathname.indexOf("\\html\\") !== -1) {
+        loginLink.href = "login.html";
+      }
+
+      if (window.location.pathname.indexOf("/index.html") !== -1 || window.location.pathname.indexOf("\\index.html") !== -1) {
+        loginLink.href = "./html/login.html";
+      }
+
+      if (headerInner && accessTools) {
+        headerInner.insertBefore(loginLink, accessTools);
+      } else if (headerInner) {
+        headerInner.appendChild(loginLink);
+      }
+      return;
+    }
+
+    var profileMenu = document.createElement("div");
+    profileMenu.className = "auth-nav-menu";
+    profileMenu.setAttribute("data-auth-nav-control", "true");
+
+    var profileButton = document.createElement("button");
+    profileButton.className = "auth-nav-profile";
+    profileButton.type = "button";
+    profileButton.setAttribute("aria-haspopup", "true");
+    profileButton.setAttribute("aria-expanded", "false");
+    profileButton.setAttribute(
+      "aria-label",
+      user && user.name ? "Perfil de " + user.name : "Perfil"
+    );
+    profileButton.setAttribute("title", user && user.name ? user.name : "Perfil");
+    profileButton.textContent = user && user.name ? user.name : "Perfil";
+
+    var menuPanel = document.createElement("div");
+    menuPanel.className = "auth-nav-menu-panel";
+    menuPanel.setAttribute("role", "menu");
+    menuPanel.setAttribute("aria-label", "Opções do usuário");
+    menuPanel.hidden = true;
+
+    var userEmail = document.createElement("p");
+    userEmail.className = "auth-nav-menu-email";
+    userEmail.textContent = user && user.email ? user.email : "Email não disponível";
+    userEmail.setAttribute("role", "none");
+
+    var logoutButton = document.createElement("button");
+    logoutButton.className = "button auth-nav-logout";
+    logoutButton.type = "button";
+    logoutButton.setAttribute("role", "menuitem");
+    logoutButton.textContent = "Sair";
+
+    menuPanel.appendChild(userEmail);
+    menuPanel.appendChild(logoutButton);
+    profileMenu.appendChild(profileButton);
+    profileMenu.appendChild(menuPanel);
+
+    function closeProfileMenu() {
+      profileMenu.classList.remove("auth-nav-menu--open");
+      profileButton.setAttribute("aria-expanded", "false");
+      menuPanel.hidden = true;
+    }
+
+    function openProfileMenu() {
+      profileMenu.classList.add("auth-nav-menu--open");
+      profileButton.setAttribute("aria-expanded", "true");
+      menuPanel.hidden = false;
+    }
+
+    function toggleProfileMenu() {
+      if (profileMenu.classList.contains("auth-nav-menu--open")) {
+        closeProfileMenu();
+      } else {
+        openProfileMenu();
+      }
+    }
+
+    profileButton.addEventListener("click", function (event) {
+      event.stopPropagation();
+      toggleProfileMenu();
+    });
+
+    logoutButton.addEventListener("click", function () {
+      logoutAndRedirect();
+    });
+
+    window.addEventListener("click", function (event) {
+      if (!profileMenu.contains(event.target)) {
+        closeProfileMenu();
+      }
+    });
+
+    window.addEventListener("keydown", function (event) {
+      if (event.key === "Escape" || event.key === "Esc" || event.keyCode === 27) {
+        closeProfileMenu();
+      }
+    });
+
+    if (headerInner && accessTools) {
+      headerInner.insertBefore(profileMenu, accessTools);
+    } else if (headerInner) {
+      headerInner.appendChild(profileMenu);
+    }
+  }
+
   function initialize() {
     var initializers = [
       initializePreferences,
@@ -627,7 +958,8 @@
       initializeCreationForm,
       initializePrintButtons,
       initializeImageFallbacks,
-      initializeCurrentYear
+      initializeCurrentYear,
+      initializeAuthNav
     ];
 
     for (var index = 0; index < initializers.length; index += 1) {

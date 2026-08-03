@@ -8,7 +8,10 @@
   <link rel="icon" type="image/png" href="../assets/images/DevA11Y-logo.png">
   <link rel="stylesheet" href="../Style/base.css">
   <link rel="stylesheet" href="../Style/post.css">
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@2.4.0/dist/purify.min.js" defer></script>
   <script src="../js/app.js" defer></script>
+  <script src="../js/documentation-api.js" defer></script>
 </head>
 <body data-page="creation">
   <a class="skip-link" href="#conteudo-principal">Ir para o conteúdo principal</a>
@@ -21,7 +24,7 @@
         <ul class="nav-list">
           <li><a href="../index.html">Início</a></li>
           <li><a href="./blog.html">Tutoriais</a></li>
-          <li><a href="./documentacao.html">Documentações</a></li>
+          <li><a href="./artigos.html">Documentações</a></li>
           <li><a href="./post.html" aria-current="page">Criar conteúdo</a></li>
         </ul>
       </nav>
@@ -83,12 +86,12 @@
               <p class="field-hint" id="category-hint">Escolha a categoria que melhor representa a proposta.</p>
               <select id="category" name="category" required aria-describedby="category-hint">
                 <option value="">Selecione uma categoria</option>
-                <option value="daltonismo">Daltonismo</option>
-                <option value="cegueira">Cegueira e leitores de tela</option>
-                <option value="semantica">HTML semântico</option>
-                <option value="teclado">Navegação por teclado</option>
-                <option value="portabilidade">Portabilidade e responsividade</option>
-                <option value="outros">Outros temas de acessibilidade</option>
+                <option value="Daltonismo">Daltonismo</option>
+                <option value="Cegueira e leitores de tela">Cegueira e leitores de tela</option>
+                <option value="HTML semântico">HTML semântico</option>
+                <option value="Navegação por teclado">Navegação por teclado</option>
+                <option value="Portabilidade e responsividade">Portabilidade e responsividade</option>
+                <option value="Outros">Outros temas de acessibilidade</option>
               </select>
             </div>
 
@@ -102,7 +105,22 @@
               </div>
             </div>
 
+            <div class="form-field">
+              <button class="button button-secondary" type="button" id="preview-markdown" data-preview-button>Ver preview</button>
+            </div>
+
             <p class="creation-submit-note" id="submit-note">Ao enviar, a proposta será apenas sinalizada para integração com a revisão. Nenhum dado será transmitido, salvo ou publicado por esta página.</p>
+
+            <div class="preview-dialog" role="dialog" aria-modal="true" aria-labelledby="preview-titulo" hidden>
+              <div class="preview-dialog__backdrop" data-preview-backdrop></div>
+              <div class="preview-dialog__panel">
+                <div class="preview-dialog__header">
+                  <h2 id="preview-titulo">Pre-visualização do Artigo</h2>
+                  <button class="button button-secondary preview-dialog__close" type="button" data-preview-close>Fechar</button>
+                </div>
+                <div id="preview-content" class="preview-content" data-preview-content aria-live="polite"></div>
+              </div>
+            </div>
 
             <div class="creation-actions">
               <button class="button button-primary" type="submit" aria-describedby="submit-note" data-creation-submit disabled>Enviar conteúdo para revisão</button>
