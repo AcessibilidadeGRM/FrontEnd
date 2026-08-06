@@ -1,19 +1,52 @@
 /* Composição exclusiva da página de tutoriais. O shell e os controles compartilhados vivem em base.css. */
 
-.tutorial-layout {
-  padding-block: var(--space-4) var(--space-8);
+body[data-page="tutorials"] {
+  --tutorial-page-surface: var(--color-surface);
+  --tutorial-page-text: var(--color-text);
+  --tutorial-hero-surface: var(--color-surface);
+  --tutorial-hero-text: var(--color-text);
+  --tutorial-hero-border: var(--color-border);
+  --tutorial-card-surface: var(--color-surface);
+  --tutorial-card-text: var(--color-text);
+  --tutorial-card-border: var(--color-border);
+  --tutorial-alternate-surface: var(--color-surface);
+  --tutorial-inset-surface: var(--color-surface);
+  --tutorial-summary-surface: var(--color-surface);
+  --tutorial-summary-text: var(--color-text);
+  --tutorial-summary-border: var(--color-border);
+  --tutorial-code-surface: var(--color-surface);
+  --tutorial-code-text: var(--color-text);
+  --tutorial-table-heading-surface: var(--color-accent);
+  --tutorial-table-heading-text: var(--color-on-accent);
 }
 
-html[data-palette="palette-01"] body[data-page="tutorials"] main {
-  background:
-    linear-gradient(
-      135deg,
-      color-mix(in srgb, var(--color-primary) 18%, var(--color-surface)) 0%,
-      var(--color-surface) 24%,
-      color-mix(in srgb, var(--color-primary) 8%, var(--color-surface)) 52%,
-      var(--color-surface) 78%,
-      color-mix(in srgb, var(--color-primary) 14%, var(--color-surface)) 100%
-    );
+html[data-palette="palette-01"] body[data-page="tutorials"] {
+  --tutorial-page-surface: var(--color-brand-pale);
+  --tutorial-page-text: var(--color-brand-navy);
+  --tutorial-hero-surface: var(--color-brand-navy);
+  --tutorial-hero-text: var(--color-brand-pale);
+  --tutorial-hero-border: var(--color-highlight);
+  --tutorial-card-surface: var(--color-brand-on-blue);
+  --tutorial-card-text: var(--color-brand-navy);
+  --tutorial-card-border: var(--color-brand-navy);
+  --tutorial-alternate-surface: var(--color-brand-pale);
+  --tutorial-inset-surface: var(--color-brand-pale);
+  --tutorial-summary-surface: var(--color-brand-navy);
+  --tutorial-summary-text: var(--color-brand-pale);
+  --tutorial-summary-border: var(--color-highlight);
+  --tutorial-code-surface: var(--color-brand-navy);
+  --tutorial-code-text: var(--color-brand-pale);
+  --tutorial-table-heading-surface: var(--color-brand-navy);
+  --tutorial-table-heading-text: var(--color-brand-pale);
+}
+
+body[data-page="tutorials"] main {
+  background: var(--tutorial-page-surface);
+  color: var(--tutorial-page-text);
+}
+
+.tutorial-layout {
+  padding-block: var(--space-4) var(--space-8);
 }
 
 .tutorial-hero {
@@ -21,7 +54,11 @@ html[data-palette="palette-01"] body[data-page="tutorials"] main {
   gap: var(--space-5);
   align-items: center;
   margin-block: var(--space-5) var(--space-7);
+  padding: var(--space-7) clamp(var(--space-5), 5vw, var(--space-7));
   max-width: none;
+  border-block: 0.125rem solid var(--tutorial-hero-border);
+  background: var(--tutorial-hero-surface);
+  color: var(--tutorial-hero-text);
 }
 
 .tutorial-hero__content {
@@ -31,6 +68,7 @@ html[data-palette="palette-01"] body[data-page="tutorials"] main {
 .tutorial-hero__content h1 {
   max-width: 16ch;
   margin-block: var(--space-2) var(--space-4);
+  color: inherit;
   font-size: clamp(2rem, 8vw, 4.5rem);
   line-height: 1.05;
   overflow-wrap: normal;
@@ -46,9 +84,9 @@ html[data-palette="palette-01"] body[data-page="tutorials"] main {
   display: inline-block;
   margin: 0;
   padding: var(--space-1) var(--space-3);
-  border: 2px solid var(--color-accent);
+  border: 0.125rem solid var(--tutorial-hero-border);
   border-radius: var(--radius-pill);
-  color: var(--color-text);
+  color: inherit;
   font-weight: 800;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -56,16 +94,16 @@ html[data-palette="palette-01"] body[data-page="tutorials"] main {
 
 html[data-palette="palette-01"] .tutorial-hero .eyebrow {
   background: var(--color-highlight);
-  color: var(--color-secondary);
+  color: var(--color-brand-navy);
 }
 
 .tutorial-cover {
   margin: 0;
   overflow: hidden;
-  border: 1px solid var(--color-border);
+  border: 0.125rem solid var(--tutorial-card-border);
   border-radius: var(--radius-lg);
-  background: var(--color-surface);
-  box-shadow: var(--shadow-lg);
+  background: var(--tutorial-card-surface);
+  color: var(--tutorial-card-text);
 }
 
 .tutorial-cover img {
@@ -78,13 +116,15 @@ html[data-palette="palette-01"] .tutorial-hero .eyebrow {
 
 .tutorial-cover figcaption {
   padding: var(--space-3) var(--space-4);
-  border-top: 1px solid var(--color-border);
-  color: var(--color-text);
+  border-top: 0.125rem solid var(--tutorial-card-border);
+  color: inherit;
   font-size: 0.9rem;
 }
 
 .tutorial-search {
   margin-block: var(--space-6);
+  background: var(--tutorial-card-surface);
+  color: var(--tutorial-card-text);
 }
 
 .tutorial-search label {
@@ -115,15 +155,15 @@ html[data-palette="palette-01"] .tutorial-hero .eyebrow {
 
 .tutorial-summary {
   padding: var(--space-4);
-  border: 1px solid var(--color-border);
+  border: 0.125rem solid var(--tutorial-summary-border);
   border-radius: var(--radius-md);
-  background: var(--color-surface);
-  color: var(--color-text);
-  box-shadow: var(--shadow-sm);
+  background: var(--tutorial-summary-surface);
+  color: var(--tutorial-summary-text);
 }
 
 .tutorial-summary h2 {
   margin-top: 0;
+  color: inherit;
   font-size: 1.125rem;
 }
 
@@ -137,7 +177,7 @@ html[data-palette="palette-01"] .tutorial-hero .eyebrow {
 .tutorial-summary a {
   display: flex;
   min-block-size: var(--target-size);
-  color: var(--color-text);
+  color: inherit;
   font-weight: 700;
 }
 
@@ -151,11 +191,15 @@ html[data-palette="palette-01"] .tutorial-hero .eyebrow {
   position: relative;
   min-width: 0;
   padding: var(--space-5);
-  border: 1px solid var(--color-border);
+  border: 0.125rem solid var(--tutorial-card-border);
   border-radius: var(--radius-lg);
-  background: var(--color-surface);
-  color: var(--color-text);
-  box-shadow: var(--shadow-sm);
+  background: var(--tutorial-card-surface);
+  color: var(--tutorial-card-text);
+}
+
+html[data-palette="palette-01"] .tutorial-section:nth-of-type(even) {
+  --tutorial-inset-surface: var(--tutorial-card-surface);
+  background: var(--tutorial-alternate-surface);
 }
 
 .tutorial-section h2 {
@@ -175,7 +219,7 @@ html[data-palette="palette-01"] .tutorial-hero .eyebrow {
 }
 
 .tutorial-section a:not(.button) {
-  color: var(--color-text);
+  color: inherit;
 }
 
 .section-number {
@@ -183,7 +227,7 @@ html[data-palette="palette-01"] .tutorial-hero .eyebrow {
   top: var(--space-4);
   right: var(--space-4);
   margin: 0;
-  color: var(--color-text);
+  color: inherit;
   font-size: 1.5rem;
   font-weight: 900;
   line-height: 1;
@@ -192,9 +236,10 @@ html[data-palette="palette-01"] .tutorial-hero .eyebrow {
 .callout {
   margin-top: var(--space-5);
   padding: var(--space-4);
-  border-inline-start: 0.35rem solid var(--color-accent);
+  border: 0.125rem solid var(--tutorial-card-border);
+  border-inline-start-width: var(--space-1);
   border-radius: 0 var(--radius-md) var(--radius-md) 0;
-  background: color-mix(in srgb, var(--color-accent) 12%, var(--color-surface));
+  background: var(--tutorial-inset-surface);
 }
 
 .callout h3,
@@ -235,9 +280,9 @@ html[data-palette="palette-01"] .tutorial-hero .eyebrow {
 
 .flow span:not([aria-hidden="true"]) {
   padding: var(--space-2) var(--space-3);
-  border: 1px solid var(--color-border);
+  border: 0.125rem solid var(--tutorial-card-border);
   border-radius: var(--radius-pill);
-  background: color-mix(in srgb, var(--color-accent) 12%, var(--color-surface));
+  background: var(--tutorial-inset-surface);
   font-weight: 700;
 }
 
@@ -251,7 +296,7 @@ html[data-palette="palette-01"] .tutorial-hero .eyebrow {
   max-width: 100%;
   margin-block: var(--space-4);
   overflow-x: auto;
-  border: 1px solid var(--color-border);
+  border: 0.125rem solid var(--tutorial-card-border);
   border-radius: var(--radius-md);
 }
 
@@ -269,14 +314,14 @@ html[data-palette="palette-01"] .tutorial-hero .eyebrow {
 .tutorial-section th,
 .tutorial-section td {
   padding: var(--space-3);
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 0.125rem solid var(--tutorial-card-border);
   text-align: left;
   vertical-align: top;
 }
 
 .tutorial-section th {
-  background: color-mix(in srgb, var(--color-accent) 18%, var(--color-surface));
-  color: var(--color-text);
+  background: var(--tutorial-table-heading-surface);
+  color: var(--tutorial-table-heading-text);
 }
 
 .tutorial-section tbody tr:last-child td {
@@ -287,10 +332,10 @@ html[data-palette="palette-01"] .tutorial-hero .eyebrow {
   max-width: 100%;
   margin-block: var(--space-4);
   overflow-x: auto;
-  border: 1px solid var(--color-border);
+  border: 0.125rem solid var(--tutorial-card-border);
   border-radius: var(--radius-md);
-  background: color-mix(in srgb, var(--color-surface) 84%, #000000);
-  color: var(--color-text);
+  background: var(--tutorial-code-surface);
+  color: var(--tutorial-code-text);
   tab-size: 2;
 }
 
@@ -306,9 +351,9 @@ html[data-palette="palette-01"] .tutorial-hero .eyebrow {
 
 .tutorial-section :not(pre) > code,
 .tutorial-section kbd {
-  border: 1px solid var(--color-border);
+  border: 0.125rem solid var(--tutorial-card-border);
   border-radius: var(--radius-sm);
-  background: color-mix(in srgb, var(--color-accent) 12%, var(--color-surface));
+  background: var(--tutorial-inset-surface);
   color: inherit;
   font-family: ui-monospace, "Cascadia Code", "Segoe UI Mono", Consolas, monospace;
   font-size: 0.9em;
@@ -322,7 +367,7 @@ html[data-palette="palette-01"] .tutorial-hero .eyebrow {
   display: inline-block;
   min-width: 1.7em;
   padding: 0.12em 0.38em;
-  box-shadow: inset 0 -2px 0 var(--color-border);
+  border-block-end-width: var(--space-1);
   font-weight: 700;
   text-align: center;
 }
@@ -341,8 +386,9 @@ html[data-palette="palette-01"] .tutorial-hero .eyebrow {
 .comparison-grid > div {
   min-width: 0;
   padding: var(--space-4);
-  border: 1px solid var(--color-border);
+  border: 0.125rem solid var(--tutorial-card-border);
   border-radius: var(--radius-md);
+  background: var(--tutorial-inset-surface);
 }
 
 .comparison-grid h3 {
@@ -365,9 +411,9 @@ html[data-palette="palette-01"] .tutorial-hero .eyebrow {
 }
 
 .tutorial-section--challenge {
-  border-width: 2px;
-  border-color: var(--color-accent);
-  background: color-mix(in srgb, var(--color-accent) 8%, var(--color-surface));
+  border-width: var(--space-1);
+  border-color: var(--tutorial-card-border);
+  background: var(--tutorial-alternate-surface);
 }
 
 .tutorial-cta {
@@ -404,19 +450,23 @@ html[data-palette="palette-01"] .tutorial-hero .eyebrow {
 }
 
 @media (forced-colors: active) {
-  html[data-palette="palette-01"] body[data-page="tutorials"] main {
-    background: Canvas;
-  }
-
+  body[data-page="tutorials"] main,
+  .tutorial-hero,
   .tutorial-cover,
+  .tutorial-search,
   .tutorial-summary,
   .tutorial-section,
   .callout,
   .comparison-grid > div,
   .flow span:not([aria-hidden="true"]),
   .table-wrap,
-  .tutorial-section pre {
+  .tutorial-section th,
+  .tutorial-section pre,
+  .tutorial-section :not(pre) > code,
+  .tutorial-section kbd {
     border-color: CanvasText;
+    background: Canvas;
+    color: CanvasText;
   }
 
   .check-list li::before,

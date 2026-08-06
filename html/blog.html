@@ -62,18 +62,12 @@
 
   <main id="conteudo-principal" tabindex="-1">
     <div class="container tutorial-layout">
-      <nav class="breadcrumb" aria-label="Trilha de navegação">
-        <ol>
-          <li><a href="../index.html">Início</a></li>
-          <li aria-current="page">Tutoriais</li>
-        </ol>
-      </nav>
 
       <header class="page-intro tutorial-hero">
         <div class="tutorial-hero__content">
           <p class="eyebrow">Leitor de tela</p>
           <h1>Aprenda a usar o NVDA para testar acessibilidade</h1>
-          <p>Conheça o leitor de tela gratuito para Windows, entenda como ele interpreta uma página e transforme cada teste em decisões melhores de HTML, conteúdo e interação.</p>
+          <p>Conheça o leitor de tela gratuito para Windows,entenda como ele interpreta uma página e transforme cada teste em decisões melhores de HTML, conteúdo e interação.</p>
         </div>
         <figure class="tutorial-cover">
           <img src="../assets/images/tutorial-nvda-capa.jpg" alt="Pessoa usando um notebook com fones de ouvido enquanto testa uma interface com o NVDA" data-image-fallback>
@@ -104,7 +98,7 @@
             <li><a href="#name-role">Name &amp; Role</a></li>
             <li><a href="#aria-live">aria-live</a></li>
             <li><a href="#ordem-foco">Ordem de foco</a></li>
-            <li><a href="#fishing-mania">Fishing Mania</a></li>
+            <li><a href="#pratica-guiada-nvda">Prática guiada com NVDA</a></li>
           </ol>
         </aside>
 
@@ -237,18 +231,19 @@
             <p>Não use valores positivos de <code>tabindex</code> para reorganizar uma página. Corrija a ordem no HTML. Use <code>tabindex="-1"</code> apenas quando um elemento não interativo precisar receber foco por programação, como o conteúdo principal após um link de salto.</p>
           </section>
 
-          <section id="fishing-mania" class="tutorial-section tutorial-section--challenge" data-search-item>
+          <section id="pratica-guiada-nvda" class="tutorial-section tutorial-section--challenge" data-search-item>
             <p class="section-number" aria-hidden="true">08</p>
-            <h2>Fishing Mania: pratique o teste</h2>
-            <p>Agora aplique o que aprendeu em uma interface de jogo. No exercício Fishing Mania, um controle visualmente parecido com botão foi construído de modo que sua ação não está clara para tecnologias assistivas.</p>
-            <p>Use o NVDA e o teclado para investigar:</p>
-            <ul class="check-list">
-              <li>o controle entra na ordem de foco?</li>
-              <li>o leitor anuncia um nome e uma função?</li>
-              <li>é possível acioná-lo com o teclado?</li>
-              <li>qual elemento HTML oferece esse comportamento sem recriá-lo com JavaScript?</li>
-            </ul>
-            <a class="button button--primary tutorial-cta" href="exercicio.html">Ir para o exercício Fishing Mania</a>
+            <h2>Prática guiada com NVDA</h2>
+            <p>Abra a página que será avaliada no navegador e inicie o NVDA pelo atalho <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>N</kbd> ou pelo menu Iniciar do Windows. Aguarde a mensagem de boas-vindas e pressione <kbd>Ctrl</kbd> se precisar interromper a fala antes de começar.</p>
+            <ol class="test-steps">
+              <li><strong>Percorra a estrutura:</strong> use <kbd>H</kbd> para títulos, <kbd>D</kbd> para regiões, <kbd>K</kbd> para links e <kbd>F</kbd> para campos de formulário. Use os mesmos comandos com <kbd>Shift</kbd> para voltar e confirme se é possível entender a organização da página sem apoio visual.</li>
+              <li><strong>Confira o que é anunciado:</strong> em cada link, botão e campo, verifique se o nome acessível descreve a ação, se a função corresponde ao controle e se estado ou valor — como expandido, marcado, obrigatório ou inválido — são comunicados quando relevantes.</li>
+              <li><strong>Valide a ordem de foco:</strong> avance com <kbd>Tab</kbd> e volte com <kbd>Shift</kbd> + <kbd>Tab</kbd>. Compare a sequência com a leitura e com a tarefa, observando itens ignorados, repetidos, fora de contexto ou pontos em que o foco fica preso.</li>
+              <li><strong>Teste o formulário:</strong> identifique rótulos e instruções, preencha os campos, acione a ação principal e confirme se erros, ajuda e resultado são anunciados sem perder o contexto.</li>
+              <li><strong>Registre cada barreira:</strong> anote a página e a etapa da tarefa, o elemento afetado, o comando usado, o que o NVDA anunciou, o resultado esperado e o impacto para a pessoa usuária. Inclua passos curtos que permitam reproduzir o problema.</li>
+            </ol>
+            <p>Ao terminar, organize os registros por impacto e corrija primeiro as barreiras que impedem concluir a tarefa. Depois, repita o mesmo percurso para confirmar nome, função, estado e ordem de foco.</p>
+            <a class="button button--primary tutorial-cta" href="documentacao.html">Consultar o guia de NVDA</a>
           </section>
         </article>
       </div>
@@ -256,15 +251,16 @@
   </main>
 
   <footer class="site-footer">
-    <div class="container footer-inner">
-      <div>
-        <p class="brand">DEV A11Y</p>
-        <p>Acessibilidade se constrói desde a primeira linha de código.</p>
-      </div>
-      <address>
-        Contato: <a href="mailto:guerrierosantoslucas@gmail.com">guerrierosantoslucas@gmail.com</a>
-      </address>
-      <p>© <span data-current-year>2026</span> DEV A11Y. Todos os direitos reservados.</p>
+    <div class="shell footer-inner">
+      <p><strong>DEV A11Y</strong> — acessibilidade desde a primeira linha.</p>
+      <nav class="footer-nav" aria-label="Navegação do rodapé">
+        <a href="../index.html">Início</a>
+        <a href="blog.html">Tutoriais</a>
+        <a href="artigos.html">Documentações</a>
+        <a href="post.html">Criar conteúdo</a>
+      </nav>
+      <a class="footer-contact" href="mailto:guerrierosantoslucas@gmail.com">Contato</a>
+      <p class="site-footer__legal">© <span data-current-year>2026</span> DEV A11Y.</p>
     </div>
   </footer>
 
