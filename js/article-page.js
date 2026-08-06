@@ -59,11 +59,71 @@
       .join("");
   }
 
+  function slugify(text) {
+    var base = String(text || "")
+      .trim()
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[̀-ͯ]/g, "")
+      .replace(/[^a-z0-9\s-]/g, "")
+      .replace(/\s+/g, "-")
+      .replace(/-+/g, "-")
+      .replace(/(^-|-$)/g, "");
+
+    return base || "secao";
+  }
+
+  function buildTableOfContents(bodyElement) {
+    var tocAside = document.querySelector("[data-article-toc]");
+    var tocList = document.querySelector("[data-article-toc-list]");
+
+    if (!tocAside || !tocList) {
+      return;
+    }
+
+    tocList.innerHTML = "";
+
+    var headings = bodyElement.querySelectorAll("h1, h2, h3");
+    var usedIds = Object.create(null);
+
+    if (headings.length === 0) {
+      tocAside.hidden = true;
+      return;
+    }
+
+    headings.forEach(function (heading) {
+      var slug = slugify(heading.textContent);
+      var id = slug;
+      var count = usedIds[slug] || 0;
+
+      while (document.getElementById(id)) {
+        count += 1;
+        id = slug + "-" + count;
+      }
+
+      usedIds[slug] = count;
+      heading.id = id;
+
+      var item = document.createElement("li");
+      item.className = "article-toc__item article-toc__item--" + heading.tagName.toLowerCase();
+
+      var link = document.createElement("a");
+      link.href = "#" + id;
+      link.textContent = heading.textContent;
+
+      item.appendChild(link);
+      tocList.appendChild(item);
+    });
+
+    tocAside.hidden = false;
+  }
+
   function renderArticle(article, authorName) {
     var titleElement = document.getElementById("titulo-artigo");
     var metaElement = document.getElementById("article-meta");
     var bodyElement = document.getElementById("article-body");
     var authorElement = document.getElementById("article-author");
+    var tocAside = document.querySelector("[data-article-toc]");
 
     if (!titleElement || !metaElement || !bodyElement || !authorElement) {
       return;
@@ -74,6 +134,9 @@
       metaElement.textContent = "Não foi possível carregar os detalhes do artigo.";
       bodyElement.innerHTML = "<p>Volte para <a href=\"artigos.html\">Artigos</a> e selecione um item.</p>";
       authorElement.textContent = "";
+      if (tocAside) {
+        tocAside.hidden = true;
+      }
       return;
     }
 
@@ -95,6 +158,8 @@
         bodyElement.appendChild(sectionText);
       });
     }
+
+    buildTableOfContents(bodyElement);
   }
 
   function loadAuthorName(authorId, callback) {

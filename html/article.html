@@ -9,6 +9,7 @@
         <link rel="icon" type="image/png"
             href="../assets/images/DevA11Y-logo.png">
         <link rel="stylesheet" href="../Style/base.css">
+        <link rel="stylesheet" href="../Style/documentacao.css">
         <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" defer></script>
         <script src="https://cdn.jsdelivr.net/npm/dompurify@2.4.0/dist/purify.min.js" defer></script>
         <script src="../js/app.js" defer></script>
@@ -90,16 +91,25 @@
                     </div>
                 </section>
         <main id="conteudo-principal" tabindex="-1">
-            <div class="container">
-                <section class="article-view" aria-labelledby="titulo-artigo"
-                    id="article-view">
-                    <br>
-                    <div class="article-body" id="article-body">
-                        <p>Se você veio diretamente para esta página, selecione
-                            um artigo em <a href="artigos.html">Artigos</a> para
-                            ver o conteúdo completo.</p>
-                    </div>
-                </section>
+            <div class="documentation-shell">
+                <div class="documentation-layout">
+                    <aside class="documentation-toc" data-article-toc hidden
+                        aria-labelledby="sumario-titulo">
+                        <h2 id="sumario-titulo">Nesta página</h2>
+                        <nav aria-label="Sumário do artigo">
+                            <ol data-article-toc-list></ol>
+                        </nav>
+                    </aside>
+
+                    <section class="article-view documentation-article"
+                        aria-labelledby="titulo-artigo" id="article-view">
+                        <div class="article-body" id="article-body">
+                            <p>Se você veio diretamente para esta página, selecione
+                                um artigo em <a href="artigos.html">Artigos</a> para
+                                ver o conteúdo completo.</p>
+                        </div>
+                    </section>
+                </div>
             </div>
         </main>
 

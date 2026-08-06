@@ -40,7 +40,7 @@
     --shadow-sm: 0 0.25rem 0.75rem rgb(0 0 0 / 0.24);
     --shadow-lg: 0 1rem 2.5rem rgb(0 0 0 / 0.4);
     --content-width: 75rem;
-    --prose-width: 70ch;
+    --prose-width: 80ch;
     --header-height: 4.5rem;
     --target-size: max(44px, 2.75rem);
     --transition-fast: 160ms ease;

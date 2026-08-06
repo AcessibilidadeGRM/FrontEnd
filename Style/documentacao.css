@@ -108,6 +108,18 @@ html[data-palette="palette-01"] .article-label {
   font-weight: 650;
 }
 
+.article-toc__item--h2 {
+  margin-left: var(--space-3);
+}
+
+.article-toc__item--h3 {
+  margin-left: var(--space-5);
+}
+
+.documentation-toc nav ol{
+  list-style: none;
+}
+
 .documentation-article {
   min-width: 0;
   max-width: var(--prose-width);
