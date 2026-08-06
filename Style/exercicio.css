@@ -1,7 +1,31 @@
+body[data-page="exercise"] {
+  --exercise-hero-surface: var(--color-surface);
+  --exercise-hero-text: var(--color-text);
+  --exercise-content-surface: var(--color-surface);
+  --exercise-card-surface: var(--color-surface);
+  --exercise-alternate-surface: var(--color-surface);
+  color: var(--color-text);
+  background: var(--exercise-content-surface);
+}
+
+html[data-palette="palette-01"] body[data-page="exercise"] {
+  --exercise-hero-surface: var(--color-brand-navy);
+  --exercise-hero-text: var(--color-brand-on-blue);
+  --exercise-content-surface: var(--color-brand-pale);
+  --exercise-card-surface: var(--color-surface);
+  --exercise-alternate-surface: var(--color-brand-pale);
+}
+
 .exercise-main {
   display: grid;
   gap: var(--space-7);
   padding-block: var(--space-5) var(--space-8);
+}
+
+.exercise-main > *,
+.challenge > *,
+.solution-content > * {
+  min-width: 0;
 }
 
 .breadcrumb ol {
@@ -22,12 +46,21 @@
 
 .exercise-intro {
   max-width: var(--prose-width);
+  padding: clamp(var(--space-5), 6vw, var(--space-7));
+  color: var(--exercise-hero-text);
+  background: var(--exercise-hero-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
 }
 
 .exercise-intro h1,
 .solution-heading h2,
 .next-step h2 {
   margin-block: var(--space-2) var(--space-3);
+}
+
+.exercise-intro h1 {
+  color: inherit;
 }
 
 .eyebrow {
@@ -46,6 +79,10 @@ html[data-palette="palette-01"] .eyebrow {
   color: var(--color-secondary);
 }
 
+html[data-palette="palette-01"] .exercise-intro {
+  border-color: var(--color-highlight);
+}
+
 .challenge {
   display: grid;
   gap: var(--space-6);
@@ -58,8 +95,7 @@ html[data-palette="palette-01"] .eyebrow {
 .next-step {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
-  background: var(--color-surface);
-  box-shadow: var(--shadow-sm);
+  background: var(--exercise-card-surface);
 }
 
 .challenge-copy,
@@ -79,8 +115,8 @@ html[data-palette="palette-01"] .eyebrow {
   border: 2px solid var(--color-border);
   border-inline-start: 0.4rem solid var(--color-accent);
   border-radius: var(--radius-md);
-  background: #0b172f;
-  color: #f4f8ff;
+  background: var(--color-brand-navy);
+  color: var(--color-brand-on-blue);
   font-size: 0.95em;
   line-height: 1.65;
   tab-size: 2;
@@ -100,8 +136,8 @@ html[data-palette="palette-01"] .eyebrow {
   margin-block-end: 0;
   padding: var(--space-3);
   border-radius: var(--radius-sm);
-  background: var(--color-pale);
-  color: var(--color-secondary);
+  background: var(--exercise-alternate-surface);
+  color: var(--color-text);
 }
 
 .exercise-form fieldset {
@@ -132,17 +168,34 @@ html[data-palette="palette-01"] .eyebrow {
   padding: var(--space-3);
   border: 2px solid var(--color-border);
   border-radius: var(--radius-md);
+  background: var(--exercise-card-surface);
   cursor: pointer;
 }
 
 .answer-option:hover {
   border-color: var(--color-accent);
+  text-decoration: underline;
+  text-decoration-thickness: 0.125rem;
+  text-underline-offset: 0.2em;
 }
 
 .answer-option:has(input:checked) {
   border-color: var(--color-accent);
-  background: var(--color-pale);
-  color: var(--color-secondary);
+  outline: 0.125rem solid var(--color-accent);
+  outline-offset: var(--space-1);
+  background: var(--exercise-alternate-surface);
+  color: var(--color-text);
+}
+
+.answer-option:has(input:checked)::after {
+  grid-column: 2;
+  justify-self: start;
+  padding: var(--space-1) var(--space-2);
+  border: 1px solid currentColor;
+  border-radius: var(--radius-sm);
+  font-size: 0.85em;
+  font-weight: 800;
+  content: "Resposta selecionada";
 }
 
 .answer-option:has(input:focus-visible) {
@@ -167,12 +220,32 @@ html[data-palette="palette-01"] .eyebrow {
 .exercise-feedback {
   min-height: 1.5em;
   margin-block: var(--space-4) 0;
-  font-weight: 700;
+  font-weight: 800;
 }
 
 .exercise-feedback:empty {
   min-height: 0;
   margin-block-start: 0;
+}
+
+.exercise-feedback[data-state] {
+  padding: var(--space-3) var(--space-4);
+  background: var(--exercise-card-surface);
+  border: 0.125rem solid var(--color-border);
+  border-inline-start-width: var(--space-2);
+  border-radius: var(--radius-md);
+}
+
+.exercise-feedback[data-state="correct"] {
+  border-inline-start-color: var(--color-success);
+}
+
+.exercise-feedback[data-state="incorrect"] {
+  border-inline-start-color: var(--color-danger);
+}
+
+.exercise-feedback[data-state="warning"] {
+  border-inline-start-color: var(--color-accent);
 }
 
 .solution {
@@ -181,6 +254,7 @@ html[data-palette="palette-01"] .eyebrow {
 
 .solution-heading {
   padding: clamp(var(--space-4), 4vw, var(--space-6));
+  background: var(--exercise-alternate-surface);
   border-block-end: 1px solid var(--color-border);
 }
 
@@ -245,16 +319,24 @@ html[data-palette="palette-01"] .eyebrow {
 }
 
 @media (forced-colors: active) {
+  .exercise-intro,
   .challenge-copy,
   .exercise-form,
   .solution,
   .next-step,
   .answer-option,
-  .code-sample {
+  .code-sample,
+  .exercise-feedback[data-state] {
+    color: CanvasText;
+    background: Canvas;
     border-color: CanvasText;
   }
 
   .answer-option:has(input:checked) {
     outline: 3px solid Highlight;
+  }
+
+  .answer-option:has(input:checked)::after {
+    border-color: CanvasText;
   }
 }

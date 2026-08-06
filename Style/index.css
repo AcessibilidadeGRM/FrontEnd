@@ -1,11 +1,30 @@
+body[data-page="home"] {
+    --home-hero-surface: var(--color-surface);
+    --home-hero-text: var(--color-text);
+    --home-paths-surface: color-mix(in srgb, var(--color-surface) 88%, var(--color-text));
+    --home-features-surface: color-mix(in srgb, var(--color-surface) 92%, var(--color-primary));
+    --home-feature-alternate-surface: color-mix(in srgb, var(--color-surface) 84%, var(--color-primary));
+    --home-cta-surface: var(--color-accent);
+    --home-cta-text: var(--color-on-accent);
+}
+
+html[data-palette="palette-01"] body[data-page="home"] {
+    --home-hero-surface: var(--color-secondary);
+    --home-hero-text: var(--color-pale);
+    --home-paths-surface: var(--color-pale);
+    --home-features-surface: color-mix(in srgb, var(--color-pale) 88%, var(--color-primary));
+    --home-feature-alternate-surface: color-mix(in srgb, var(--color-pale) 80%, var(--color-primary));
+    --home-cta-surface: color-mix(in srgb, var(--color-primary) 72%, var(--color-pale));
+    --home-cta-text: var(--color-pale);
+}
 
 .home-hero {
     position: relative;
     isolation: isolate;
     overflow: hidden;
     padding-block: clamp(4rem, 12vw, 8rem);
-    color: var(--color-text);
-    background: var(--color-surface);
+    color: var(--home-hero-text);
+    background: var(--home-hero-surface);
 }
 
 .home-hero::before,
@@ -29,6 +48,11 @@
     aspect-ratio: 1;
     background: var(--color-accent);
     opacity: 0.12;
+}
+
+html[data-palette="palette-01"] .home-hero::before,
+html[data-palette="palette-01"] .home-hero::after {
+    border-color: var(--color-highlight);
 }
 
 html[data-palette="palette-01"] .home-hero::after {
@@ -68,6 +92,7 @@ html[data-palette="palette-01"] .home-cta__eyebrow {
 .home-hero h1 {
     max-width: 14ch;
     margin: 0;
+    color: inherit;
     font-size: clamp(2.5rem, 8vw, 5.75rem);
     line-height: 0.98;
     text-wrap: balance;
@@ -84,10 +109,40 @@ html[data-palette="palette-01"] .home-cta__eyebrow {
     flex-wrap: wrap;
     gap: var(--space-3);
 }
+.home-hero .button--secondary:hover {
+    color: var(--color-on-accent);
+}
+
+html[data-palette="palette-01"] .home-hero .button--primary {
+    border-color: var(--color-highlight);
+    background: var(--color-highlight);
+    color: var(--color-secondary);
+}
+
+html[data-palette="palette-01"] .home-hero .button--secondary {
+    border-color: var(--color-pale);
+    color: var(--color-pale);
+}
+
+html[data-palette="palette-01"] .home-hero .button--secondary:hover {
+    border-color: var(--color-pale);
+    background: var(--color-pale);
+    color: var(--color-secondary);
+}
+
+html[data-palette="palette-01"] .home-hero .button:focus-visible {
+    outline-color: var(--color-highlight);
+}
+
 
 .home-paths,
 .home-features {
     padding-block: clamp(4rem, 9vw, 7rem);
+}
+
+.home-paths {
+    color: var(--color-text);
+    background: var(--home-paths-surface);
 }
 
 .home-section-heading {
@@ -124,6 +179,8 @@ html[data-palette="palette-01"] .home-cta__eyebrow {
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-sm);
+    background: var(--color-surface);
+    color: var(--color-text);
 }
 
 .home-card__number,
@@ -156,7 +213,7 @@ html[data-palette="palette-01"] .home-cta__eyebrow {
 
 .home-features {
     color: var(--color-text);
-    background: var(--color-surface);
+    background: var(--home-features-surface);
 }
 
 .home-features .home-section-heading__eyebrow,
@@ -169,7 +226,12 @@ html[data-palette="palette-01"] .home-cta__eyebrow {
     gap: clamp(2rem, 6vw, 5rem);
     align-items: center;
     padding-block: clamp(2.5rem, 7vw, 5.5rem);
+    padding-inline: var(--space-4);
     border-block-start: 1px solid var(--color-border);
+}
+
+.home-feature--reverse {
+    background: var(--home-feature-alternate-surface);
 }
 
 .home-feature__content {
@@ -219,8 +281,8 @@ html[data-palette="palette-01"] .home-cta__eyebrow {
 
 .home-cta {
     padding-block: clamp(3rem, 8vw, 6rem);
-    color: var(--color-on-accent);
-    background: var(--color-accent);
+    color: var(--home-cta-text);
+    background: var(--home-cta-surface);
 }
 
 .home-cta__inner {
@@ -244,12 +306,17 @@ html[data-palette="palette-01"] .home-cta__eyebrow {
 
 .home-cta .button {
     justify-self: start;
-}
-
-html[data-palette="palette-01"] .home-cta .button {
     border-color: var(--color-surface);
     background: var(--color-surface);
     color: var(--color-text);
+}
+
+.home-cta .button:focus-visible {
+    outline-color: var(--color-surface);
+}
+
+body[data-page="home"] .site-footer {
+    margin-block-start: 0;
 }
 
 @media (min-width: 48rem) {
@@ -258,6 +325,7 @@ html[data-palette="palette-01"] .home-cta .button {
     }
 
     .home-feature {
+        padding-inline: var(--space-6);
         grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.9fr);
     }
 
@@ -285,6 +353,95 @@ html[data-palette="palette-01"] .home-cta .button {
 
     .home-feature {
         grid-template-columns: minmax(0, 1.05fr) minmax(24rem, 0.95fr);
+    }
+}
+
+@media (forced-colors: active) {
+    .home-hero,
+    .home-paths,
+    .home-features,
+    .home-feature--reverse,
+    .home-cta,
+    .home-card,
+    .home-feature__media {
+        background: Canvas;
+        color: CanvasText;
+    }
+
+    .home-hero h1,
+    .home-section-heading h2,
+    .home-card h3,
+    .home-card__number,
+    .home-feature h3,
+    .home-feature__index,
+    .home-cta h2 {
+        color: CanvasText;
+    }
+
+    html[data-palette="palette-01"] .home-hero__eyebrow,
+    html[data-palette="palette-01"] .home-section-heading__eyebrow,
+    html[data-palette="palette-01"] .home-cta__eyebrow {
+        background: Highlight;
+        color: HighlightText;
+    }
+
+    .home-feature {
+        border-color: CanvasText;
+    }
+
+    .home-hero::before,
+    .home-hero::after,
+    html[data-palette="palette-01"] .home-hero::before,
+    html[data-palette="palette-01"] .home-hero::after {
+        border-color: CanvasText;
+        background: transparent;
+        opacity: 1;
+    }
+
+    .home-feature__content > a {
+        color: LinkText;
+    }
+
+    .home-hero .button,
+    .home-hero .button--secondary:hover,
+    html[data-palette="palette-01"] .home-hero .button--primary,
+    html[data-palette="palette-01"] .home-hero .button--secondary,
+    html[data-palette="palette-01"] .home-hero .button--secondary:hover,
+    .home-cta .button {
+        border-color: ButtonText;
+        background: ButtonFace;
+        color: ButtonText;
+    }
+
+    .home-hero .button:focus-visible,
+    html[data-palette="palette-01"] .home-hero .button:focus-visible,
+    .home-cta .button:focus-visible {
+        outline-color: Highlight;
+    }
+}
+
+@media print {
+    .home-hero,
+    .home-paths,
+    .home-features,
+    .home-feature,
+    .home-feature--reverse,
+    .home-card,
+    .home-feature__media,
+    .home-cta {
+        background: transparent !important;
+        color: inherit !important;
+    }
+
+    .home-card,
+    .home-feature,
+    .home-feature__media {
+        border-color: currentColor !important;
+    }
+
+    .home-hero::before,
+    .home-hero::after {
+        display: none;
     }
 }
 
